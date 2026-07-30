@@ -387,3 +387,70 @@ Edite `src/features/product-landing/data/product-content.ts` para alterar textos
 - Correção da exibição da duração antes do carregamento dos metadados.
 - Correção do foco visível nos controles.
 - Correção da responsividade da foto e do nome da cliente.
+
+
+# Milestone 006 — FAQ Interativo e Acessível
+
+## Funcionalidades
+
+- Reformulação completa da seção de dúvidas frequentes.
+- Substituição dos accordions nativos por controles interativos em React.
+- Abertura de uma pergunta por vez.
+- Possibilidade de fechar a pergunta atualmente aberta.
+- Primeira pergunta aberta automaticamente ao carregar a seção.
+- Animação suave ao abrir e fechar as respostas.
+- Transição visual do ícone entre os estados de abrir e fechar.
+- Inclusão de título e descrição comerciais para orientar o cliente.
+- Organização das dúvidas sobre produto, aplicação, entrega e pagamento.
+- Layout responsivo para desktop, tablet e dispositivos móveis.
+- Aplicação da fonte Georgia nos títulos e perguntas.
+
+## Melhorias Técnicas
+
+- Conversão da seção de FAQ em Client Component.
+- Controle centralizado do item aberto com `useState`.
+- Associação acessível entre botão e resposta com `aria-controls`.
+- Informação do estado atual através de `aria-expanded`.
+- Aplicação de `role="region"` nos painéis de resposta.
+- Identificadores únicos para botões e painéis.
+- Navegação completa por teclado.
+- Inclusão de estado de foco visível nos botões.
+- Estrutura preparada para adicionar ou remover perguntas pelo conteúdo.
+- Remoção da dependência do comportamento nativo de `<details>` para animações.
+
+## Performance
+
+- Animação feita apenas com CSS.
+- Uso de `grid-template-rows` para expansão sem cálculo manual de altura.
+- Ausência de bibliotecas externas para o accordion.
+- Renderização contínua e leve das respostas.
+- Transições restritas à resposta e ao ícone.
+- Suporte a `prefers-reduced-motion`.
+- Uso de estado único para controlar toda a lista.
+- Layout construído com CSS Grid responsivo.
+
+## Refatorações
+
+- Remoção do componente genérico `SectionHeading` da seção.
+- Criação de cabeçalho exclusivo para o FAQ.
+- Substituição da descrição técnica sobre HTML por conteúdo comercial.
+- Substituição dos elementos `<details>` e `<summary>` por botões acessíveis.
+- Separação visual entre perguntas através de linhas discretas.
+- Criação de botão circular para expansão e recolhimento.
+- Remoção do posicionamento `sticky` do título lateral.
+- Simplificação do fundo e dos elementos decorativos.
+- Aplicação de tipografia editorial e espaçamento premium.
+- Reorganização do layout para coluna única em telas menores.
+
+## Correções
+
+- Correção do movimento do título ao abrir e fechar perguntas.
+- Correção do salto causado pelo posicionamento `sticky`.
+- Correção do reposicionamento automático provocado pelo scroll anchoring.
+- Aplicação de `overflow-anchor: none` nos elementos relevantes.
+- Correção da animação brusca no fechamento das respostas.
+- Correção do desaparecimento imediato do conteúdo.
+- Correção do alinhamento dos botões em telas pequenas.
+- Correção do espaçamento interno das respostas no mobile.
+- Correção das margens padrão dos títulos e parágrafos.
+- Correção do comportamento para usuários com redução de movimento.
