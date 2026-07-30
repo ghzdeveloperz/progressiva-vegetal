@@ -587,3 +587,6 @@ Edite `src/features/product-landing/data/product-content.ts` para alterar textos
 - Correção do alinhamento e tamanho dos cards em telas menores.
 - Correção do destaque insuficiente do vídeo central.
 - Correção do consumo desnecessário de recursos fora da área visível.
+
+
+# Milestone 009 - Apenas adicionei o favicon
