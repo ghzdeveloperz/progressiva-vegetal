@@ -314,3 +314,76 @@ Edite `src/features/product-landing/data/product-content.ts` para alterar textos
 - Correção de textos provisórios e pouco comerciais.
 - Correção da escala dos cards laterais.
 - Correção da disposição da seção em telas menores.
+
+
+# Milestone 005 — Prova Social em Áudio
+
+## Funcionalidades
+
+- Substituição do bloco informativo final por um card de prova social em áudio.
+- Inclusão de depoimento real em formato MP3.
+- Reprodução e pausa do áudio através de controle personalizado.
+- Exibição do tempo atual e da duração total.
+- Navegação pelo áudio através da faixa sonora.
+- Representação visual da forma de onda inspirada em mensagens de voz.
+- Destaque progressivo das barras conforme o áudio é reproduzido.
+- Inclusão de foto da cliente.
+- Inclusão de nome fictício para apresentação do depoimento.
+- Layout compacto para reduzir a altura total do card.
+- Player responsivo para desktop e dispositivos móveis.
+- Alinhamento horizontal entre botão de reprodução e faixa sonora no mobile.
+
+## Melhorias Técnicas
+
+- Criação de componente dedicado para prova social em áudio.
+- Isolamento do player como Client Component.
+- Uso da API nativa de áudio do navegador.
+- Controle de reprodução através de `HTMLAudioElement`.
+- Sincronização do progresso com o evento `timeupdate`.
+- Leitura automática da duração através de `loadedmetadata`.
+- Tratamento do término do áudio com o evento `ended`.
+- Limpeza dos event listeners ao desmontar o componente.
+- Navegação manual pela faixa sonora com cálculo proporcional.
+- Formatação segura de minutos e segundos.
+- Uso de referências tipadas para áudio e faixa interativa.
+- Uso de atributos acessíveis nos controles de reprodução.
+
+## Performance
+
+- Áudio configurado com `preload="metadata"`.
+- Ausência de bibliotecas externas para reprodução e waveform.
+- Forma de onda construída apenas com CSS e elementos leves.
+- Imagem da cliente otimizada com `next/image`.
+- Carregamento responsivo da foto.
+- Atualização de estado limitada aos eventos nativos do áudio.
+- Transições aplicadas somente em propriedades leves.
+- Suporte a `prefers-reduced-motion`.
+- Redução de conteúdo textual para diminuir a altura do componente.
+
+## Refatorações
+
+- Remoção do antigo card “Nenhum pagamento antecipado”.
+- Remoção do botão “Consultar dúvidas” desse bloco.
+- Substituição do conteúdo institucional por prova social.
+- Criação da pasta `audio-social-proof-card`.
+- Organização do áudio em `public/audios`.
+- Organização da imagem em `public/images/social-proof`.
+- Remoção do rótulo “Prova social em áudio”.
+- Remoção do título genérico “Relato de cliente”.
+- Remoção da descrição extensa da cliente.
+- Simplificação do cabeçalho para foto e nome.
+- Reorganização do player para grid responsivo.
+- Redução dos paddings e espaçamentos internos.
+
+## Correções
+
+- Correção do desalinhamento entre botão de reprodução e faixa sonora no mobile.
+- Correção da quebra do player em duas linhas.
+- Correção do excesso de altura do card.
+- Correção do espaçamento entre identidade e áudio.
+- Correção da largura da faixa sonora em telas pequenas.
+- Correção do avanço manual no áudio.
+- Correção do estado de reprodução ao finalizar o áudio.
+- Correção da exibição da duração antes do carregamento dos metadados.
+- Correção do foco visível nos controles.
+- Correção da responsividade da foto e do nome da cliente.
