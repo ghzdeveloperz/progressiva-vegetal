@@ -590,3 +590,80 @@ Edite `src/features/product-landing/data/product-content.ts` para alterar textos
 
 
 # Milestone 009 - Apenas adicionei o favicon
+
+
+# Milestone 010 — Carrossel Mobile de Ofertas
+
+## Funcionalidades
+
+- Conversão da seção de ofertas em carrossel horizontal no mobile.
+- Exibição dos três kits em navegação por arraste.
+- Centralização automática do kit com duas unidades.
+- Inclusão de seletores superiores para uma, duas e três unidades.
+- Navegação direta para cada card ao tocar no seletor correspondente.
+- Sincronização entre seletor ativo e card central do carrossel.
+- Atualização automática do seletor ao arrastar manualmente os cards.
+- Destaque visual permanente do kit com duas unidades.
+- Inclusão de badges em formato de tiara no topo dos cards.
+- Aplicação de animação 2D no card principal.
+- Inclusão de aura pulsante atrás da oferta destacada.
+- Inclusão de brilho diagonal atravessando o card principal.
+- Inclusão de contorno animado ao redor do card destacado.
+- Redução das dimensões dos cards em dispositivos móveis.
+- Manutenção do layout em três colunas no desktop.
+
+## Melhorias Técnicas
+
+- Conversão da seção de ofertas em Client Component.
+- Controle do card ativo através de `useState`.
+- Uso de referências para controle programático do carrossel.
+- Identificação automática do card mais próximo ao centro.
+- Uso de `requestAnimationFrame` durante o evento de rolagem.
+- Inclusão de controle para diferenciar scroll manual e programático.
+- Bloqueio temporário das atualizações intermediárias durante a navegação.
+- Tratamento do evento `scrollend`.
+- Cancelamento da navegação programática ao iniciar arraste manual.
+- Limpeza segura de timeouts e frames ao desmontar o componente.
+- Normalização dos índices antes da navegação.
+- Manutenção dos links de checkout pela rota interna segura.
+
+## Performance
+
+- Carrossel implementado sem bibliotecas externas.
+- Uso de scroll nativo com `scroll-snap`.
+- Atualizações de estado limitadas por frame.
+- Transições restritas a transformações, opacidade e sombras.
+- Animação aplicada apenas ao card principal.
+- Cards laterais renderizados com menor escala e opacidade.
+- Uso de `overscroll-behavior-inline` para melhorar a navegação.
+- Ocultação da barra de rolagem sem bloquear o scroll.
+- Suporte a `prefers-reduced-motion`.
+- Preservação do layout estático no desktop.
+
+## Refatorações
+
+- Substituição do grid vertical mobile por carrossel horizontal.
+- Criação dos estados `activeIndex` e controle de rolagem programática.
+- Criação das funções `scrollToOffer` e `updateActiveCardFromScroll`.
+- Criação dos seletores mobile de quantidade.
+- Remoção dos antigos indicadores inferiores.
+- Reorganização das badges para fora do conteúdo interno.
+- Transformação das badges em tiaras flutuantes.
+- Separação entre aura, contorno e brilho do card principal.
+- Redução de paddings, tipografia e altura dos cards mobile.
+- Aplicação de estilos específicos para o seletor ativo.
+- Simplificação da hierarquia visual dos cards laterais.
+
+## Correções
+
+- Correção do kit inicial exibido no mobile.
+- Correção do card principal que não permanecia centralizado.
+- Correção do texto escuro no seletor ativo.
+- Correção da perda da cor branca após trocar de opção.
+- Correção do piscar do fundo durante a rolagem programática.
+- Correção da troca momentânea entre seletores intermediários.
+- Correção do excesso de altura dos cards em telas pequenas.
+- Correção do excesso de escala do card principal.
+- Correção do alinhamento das badges no topo dos cards.
+- Correção do estado ativo durante o arraste manual.
+- Correção da sincronização entre seletor e carrossel.
