@@ -1,0 +1,273 @@
+.root {
+  position: relative;
+
+  width: 100%;
+  aspect-ratio: 4 / 5;
+
+  overflow: hidden;
+
+  border: 1px solid rgb(133 113 66 / 0.18);
+  border-radius: clamp(1.35rem, 3vw, 2rem);
+
+  background: #dedbd2;
+
+  box-shadow:
+    0 24px 60px rgb(45 38 28 / 0.12),
+    inset 0 1px 0 rgb(255 255 255 / 0.42);
+
+  cursor: ew-resize;
+  isolation: isolate;
+
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.root::after {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgb(0 0 0 / 0.05),
+      transparent 20%,
+      transparent 75%,
+      rgb(0 0 0 / 0.08)
+    );
+
+  content: "";
+  pointer-events: none;
+}
+
+.image {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+.beforeLayer {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+
+  overflow: hidden;
+
+  clip-path:
+    inset(
+      0
+      calc(100% - var(--comparison-position))
+      0
+      0
+    );
+
+  will-change: clip-path;
+}
+
+.label {
+  position: absolute;
+  z-index: 5;
+  top: 1rem;
+
+  display: inline-flex;
+  min-height: 2rem;
+  align-items: center;
+  justify-content: center;
+
+  padding-inline: 0.9rem;
+
+  border: 1px solid rgb(255 255 255 / 0.3);
+  border-radius: 999px;
+
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  line-height: 1;
+  text-transform: uppercase;
+
+  box-shadow:
+    0 8px 22px rgb(0 0 0 / 0.1);
+
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+
+  pointer-events: none;
+}
+
+.beforeLabel {
+  left: 1rem;
+
+  background: rgb(255 252 245 / 0.9);
+  color: #4f5543;
+}
+
+.afterLabel {
+  right: 1rem;
+
+  border-color: rgb(255 255 255 / 0.16);
+
+  background: rgb(45 57 28 / 0.86);
+  color: #ffffff;
+}
+
+.divider {
+  position: absolute;
+  z-index: 6;
+  top: 0;
+  bottom: 0;
+  left: var(--comparison-position);
+
+  width: 1px;
+
+  background: rgb(255 255 255 / 0.9);
+
+  box-shadow:
+    0 0 0 1px rgb(36 43 26 / 0.1),
+    0 0 22px rgb(0 0 0 / 0.16);
+
+  transform: translateX(-50%);
+
+  pointer-events: none;
+}
+
+.handle {
+  position: absolute;
+  z-index: 7;
+  top: 50%;
+  left: var(--comparison-position);
+
+  display: flex;
+  width: 3.25rem;
+  height: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.16rem;
+
+  border: 1px solid rgb(255 255 255 / 0.72);
+  border-radius: 50%;
+
+  background: rgb(255 253 248 / 0.96);
+  color: #3e5026;
+
+  box-shadow:
+    0 12px 30px rgb(0 0 0 / 0.16),
+    inset 0 1px 0 #ffffff;
+
+  transform: translate(-50%, -50%);
+
+  pointer-events: none;
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.dragging .handle {
+  box-shadow:
+    0 15px 34px rgb(0 0 0 / 0.2),
+    0 0 0 6px rgb(255 255 255 / 0.14);
+
+  transform:
+    translate(-50%, -50%)
+    scale(1.06);
+}
+
+.leftArrow,
+.rightArrow {
+  font-family: Arial, sans-serif;
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.rangeLabel {
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+
+  pointer-events: none;
+}
+
+.range {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: calc(100% - 2rem);
+  height: 3.5rem;
+
+  margin: 0;
+
+  opacity: 0;
+
+  cursor: ew-resize;
+
+  transform: translate(-50%, -50%);
+
+  pointer-events: auto;
+}
+
+.range:focus-visible {
+  opacity: 0.001;
+}
+
+.root:has(.range:focus-visible) .handle {
+  outline: 3px solid rgb(218 185 112 / 0.7);
+  outline-offset: 4px;
+}
+
+.srOnly {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  overflow: hidden;
+
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+
+  white-space: nowrap;
+}
+
+@media (max-width: 48rem) {
+  .root {
+    aspect-ratio: 4 / 5.2;
+    border-radius: 1.5rem;
+  }
+
+  .label {
+    top: 0.8rem;
+    min-height: 1.8rem;
+    padding-inline: 0.72rem;
+
+    font-size: 0.58rem;
+  }
+
+  .beforeLabel {
+    left: 0.8rem;
+  }
+
+  .afterLabel {
+    right: 0.8rem;
+  }
+
+  .handle {
+    width: 2.9rem;
+    height: 2.9rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .handle {
+    transition: none;
+  }
+}

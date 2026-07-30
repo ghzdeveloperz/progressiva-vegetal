@@ -667,3 +667,73 @@ Edite `src/features/product-landing/data/product-content.ts` para alterar textos
 - Correção do alinhamento das badges no topo dos cards.
 - Correção do estado ativo durante o arraste manual.
 - Correção da sincronização entre seletor e carrossel.
+
+# Milestone 011 — Comparador Interativo de Antes e Depois
+
+## Funcionalidades
+
+- Criação de uma nova seção de resultados visuais.
+- Inclusão de cards interativos de antes e depois.
+- Sobreposição de duas imagens no mesmo comparador.
+- Controle deslizante iniciado sempre na posição central.
+- Arraste horizontal por mouse e toque.
+- Navegação pelo comparador através do teclado.
+- Inclusão das etiquetas “Antes” e “Depois”.
+- Inclusão de divisor central com alça de controle.
+- Exibição de dois comparadores no desktop.
+- Conversão dos comparadores em carrossel horizontal no mobile.
+- Inclusão de título e descrição próprios para a seção.
+- Inclusão de aviso sobre variação dos resultados.
+- Inserção da seção imediatamente após a apresentação do produto.
+
+## Melhorias Técnicas
+
+- Criação de componente reutilizável `BeforeAfterSlider`.
+- Controle da posição do comparador através de estado local.
+- Uso de Pointer Events para unificar mouse, toque e caneta.
+- Captura segura do ponteiro durante o arraste.
+- Limitação da posição entre 0% e 100%.
+- Uso de variável CSS para sincronizar imagem, divisor e controle.
+- Inclusão de `input type="range"` acessível.
+- Uso de `next/image` para otimização das imagens.
+- Definição responsiva do atributo `sizes`.
+- Estrutura sem dependência de bibliotecas externas.
+- Inclusão de labels e descrições acessíveis.
+- Priorização apenas do primeiro comparador.
+
+## Performance
+
+- Animação baseada em `clip-path`.
+- Ausência de cálculos contínuos fora da interação.
+- Imagens carregadas com otimização nativa do Next.js.
+- Uso de `will-change` somente na camada recortada.
+- Carrossel mobile construído com scroll nativo.
+- Uso de `scroll-snap` sem biblioteca adicional.
+- Ocultação da barra de rolagem sem impedir o gesto.
+- Suporte a `prefers-reduced-motion`.
+- Manutenção de apenas um estado numérico por comparador.
+
+## Refatorações
+
+- Criação da pasta `before-after-slider`.
+- Criação da pasta de seção `before-after`.
+- Organização das imagens em `public/images/before-after`.
+- Separação entre lógica do comparador e layout da seção.
+- Inclusão da nova seção no `ProductLandingPage`.
+- Reorganização da sequência da landing page.
+- Posicionamento da seção entre apresentação do produto e ofertas.
+- Padronização da tipografia Georgia nos títulos.
+- Aplicação de estilos responsivos próprios para desktop e mobile.
+
+## Correções
+
+- Correção da ausência de comparação visual dos resultados.
+- Correção da posição inicial do divisor para 50%.
+- Correção do comportamento de arraste em dispositivos móveis.
+- Correção da seleção de texto durante a interação.
+- Correção da rolagem vertical durante o uso do comparador.
+- Correção da acessibilidade para navegação por teclado.
+- Correção do recorte da imagem de antes.
+- Correção da disposição dos cards em telas pequenas.
+- Correção do alinhamento do controle central.
+- Correção da ordem da seção dentro da landing page.
