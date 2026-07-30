@@ -725,14 +725,6 @@
     0 16px 32px rgb(0 0 0 / 0.24);
 }
 
-.ctaDisabled {
-  cursor: not-allowed;
-  opacity: 0.68;
-}
-
-.ctaDisabled:hover {
-  transform: none;
-}
 
 /* =========================================================
    DISCLAIMER

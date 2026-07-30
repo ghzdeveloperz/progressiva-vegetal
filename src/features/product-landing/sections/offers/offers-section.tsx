@@ -110,7 +110,6 @@ export function OffersSection({
         carouselRect.width / 2;
 
       let closestIndex = 0;
-
       let smallestDistance =
         Number.POSITIVE_INFINITY;
 
@@ -315,7 +314,7 @@ export function OffersSection({
       aria-labelledby="offers-section-title"
     >
       <Container>
-        <header className={styles.sectionHeading}>
+        <div className={styles.sectionHeading}>
           <h2
             id="offers-section-title"
             className={styles.sectionTitle}
@@ -324,11 +323,11 @@ export function OffersSection({
           </h2>
 
           <p className={styles.sectionDescription}>
-            Compare os kits disponíveis e escolha a
-            opção mais adequada para sua rotina,
-            necessidade e frequência de uso.
+            Compare os kits disponíveis e escolha a opção mais
+            adequada para sua rotina, necessidade e frequência de
+            uso.
           </p>
-        </header>
+        </div>
 
         <div
           className={styles.mobileSelectors}
@@ -383,9 +382,6 @@ export function OffersSection({
             const isActive =
               activeIndex === index;
 
-            const isFeaturedExpired =
-              isFeatured && hasExpired;
-
             return (
               <article
                 key={offer.id}
@@ -422,9 +418,11 @@ export function OffersSection({
 
                 {isFeatured ? (
                   <span
-                    className={styles.featuredBadge}
+                    className={
+                      styles.featuredBadge
+                    }
                   >
-                    MELHOR CUSTO
+                    Mais popular
                   </span>
                 ) : null}
 
@@ -438,7 +436,7 @@ export function OffersSection({
                     />
                   ) : null}
 
-                  <header className={styles.header}>
+                  <div className={styles.header}>
                     {offer.eyebrow ? (
                       <p
                         className={
@@ -458,7 +456,7 @@ export function OffersSection({
                         offer.quantity,
                       )}
                     </p>
-                  </header>
+                  </div>
 
                   <div className={styles.pricing}>
                     {offer.originalPrice ? (
@@ -528,7 +526,7 @@ export function OffersSection({
                           }
                           role="status"
                         >
-                          Encerrada
+                          Última chance
                         </span>
                       ) : (
                         <time
@@ -565,28 +563,19 @@ export function OffersSection({
                     )}
                   </ul>
 
-                  {isFeaturedExpired ? (
-                    <span
-                      className={`${styles.cta} ${styles.ctaFeatured} ${styles.ctaDisabled}`}
-                      aria-disabled="true"
-                    >
-                      Oferta encerrada
-                    </span>
-                  ) : (
-                    <Link
-                      href={`/api/checkout?offer=${encodeURIComponent(
-                        offer.checkoutKey,
-                      )}`}
-                      className={`${styles.cta} ${
-                        isFeatured
-                          ? styles.ctaFeatured
-                          : styles.ctaDefault
-                      }`}
-                      prefetch={false}
-                    >
-                      Comprar agora
-                    </Link>
-                  )}
+                  <Link
+                    href={`/api/checkout?offer=${encodeURIComponent(
+                      offer.checkoutKey,
+                    )}`}
+                    className={`${styles.cta} ${
+                      isFeatured
+                        ? styles.ctaFeatured
+                        : styles.ctaDefault
+                    }`}
+                    prefetch={false}
+                  >
+                    Comprar agora
+                  </Link>
                 </div>
               </article>
             );
@@ -594,9 +583,8 @@ export function OffersSection({
         </div>
 
         <p className={styles.disclaimer}>
-          Checkout em ambiente seguro. O valor
-          final, a cobertura e a disponibilidade
-          devem ser confirmados durante a
+          Checkout em ambiente seguro. O valor final, a cobertura e
+          a disponibilidade devem ser confirmados durante a
           finalização do pedido.
         </p>
       </Container>

@@ -776,3 +776,49 @@ Edite `src/features/product-landing/data/product-content.ts` para alterar textos
 - Restaurada a animação flutuante do card em destaque.
 - Corrigido o posicionamento central do selo promocional.
 - Corrigida a sincronização visual do cronômetro entre diferentes seções.
+
+# Milestone 013 — Cronômetro Promocional e Ofertas Mobile
+
+## Funcionalidades
+- Implementado cronômetro promocional persistente entre sessões.
+- Exibido o mesmo prazo no topo da página e no card em destaque.
+- Adicionado desaparecimento automático da barra promocional ao finalizar o tempo.
+- Mantido o checkout disponível mesmo após o encerramento do cronômetro.
+- Adicionado estado visual “Última chance” após o término da contagem.
+- Restaurado o carrossel horizontal de ofertas no mobile.
+- Configurado o card 2 como oferta inicial centralizada no mobile.
+- Adicionado selo “Mais popular” apenas no card destacado.
+
+## Melhorias Técnicas
+- Centralizada a lógica do cronômetro em hook reutilizável.
+- Sincronizado o timestamp entre diferentes componentes da landing page.
+- Implementada persistência com `localStorage` usando horário absoluto de expiração.
+- Adicionada animação de saída com fade, deslocamento e redução de altura.
+- Implementado controle seguro de intervalos, timeouts e eventos do carrossel.
+- Mantida navegação de checkout independente do estado do cronômetro.
+- Melhorada a acessibilidade dos seletores, contador e região de ofertas.
+
+## Performance
+- Atualização do cronômetro limitada a uma vez por segundo.
+- Uso de `requestAnimationFrame` para detectar o card central no carrossel.
+- Eventos de scroll e ponteiro configurados como passivos.
+- Evitadas atualizações intermediárias durante rolagem programática.
+- Realizada limpeza de intervalos, timeouts e listeners ao desmontar componentes.
+- Mantidas animações desativadas para usuários com movimento reduzido.
+
+## Refatorações
+- Restaurada a estrutura original do carrossel responsivo.
+- Simplificada a lógica de compra após a expiração da oferta.
+- Removida a desativação indevida do botão de checkout.
+- Padronizado o destaque visual exclusivamente no card principal.
+- Removidas tags de produto que não pertenciam ao design da oferta.
+- Reorganizados os estados de oferta destacada, card ativo e prazo expirado.
+
+## Correções
+- Corrigido o bloqueio do botão após o término do cronômetro.
+- Corrigida a exibição dos cards em coluna no mobile.
+- Restaurada a centralização automática do card 2.
+- Restaurado o brilho branco diagonal animado.
+- Restauradas a aura pulsante e a animação flutuante do card principal.
+- Corrigido o posicionamento central do selo “Mais popular”.
+- Corrigido o espaço vazio deixado pela barra promocional após sua remoção.
