@@ -15,7 +15,12 @@ export function ProductLandingPage() {
   return (
     <>
       <TrustBarSection items={productContent.trustItems} />
-      <HeaderSection brandName={productContent.brandName} />
+
+      <HeaderSection
+        brandName={productContent.brandName}
+        brandLogo={productContent.brandLogo}
+      />
+
       <main>
         <HeroSection content={productContent} />
         <BenefitsSection items={productContent.benefits} />
@@ -26,6 +31,7 @@ export function ProductLandingPage() {
         <FaqSection items={productContent.faq} />
         <FinalCtaSection />
       </main>
+
       <FooterSection brandName={productContent.brandName} />
     </>
   );

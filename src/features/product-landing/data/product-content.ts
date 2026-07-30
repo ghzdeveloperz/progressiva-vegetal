@@ -1,20 +1,41 @@
 import type { ProductPageContent } from "../model/product-page-content";
 
 export const productContent = {
-  brandName: "Progressiva Vegetal",
-  productName: "Progressiva Vegetal Profissional 500 ml",
-  productImage: "/images/products/progressiva-vegetal.png",
+  brandName: "Progressiva Vegetal Havana",
+
+  brandLogo:
+    "/images/brand/logo-progressiva-vegetal-horizontal.png",
+
+  productName:
+    "Progressiva Vegetal Profissional 500 ml",
+
+  productImage:
+    "/images/products/progressiva-vegetal.png",
+
   hero: {
-    eyebrow: "Cuidado capilar profissional",
-    title: "Cabelos alinhados com acabamento",
-    highlightedText: "profissional",
+    bannerImage:
+      "/images/banners/progressiva-vegetal-ofc.png",
+
+    mobileBannerImage:
+      "/images/banners/progressiva-vegetal-mobile.png",
+
+    eyebrow:
+      "Progressiva vegetal · sem formol",
+
+    title:
+      "Liso impecável, com brilho intenso e aparência",
+
+    highlightedText:
+      "natural.",
+
     description:
-      "Uma experiência de cuidado pensada para quem busca praticidade, apresentação e uma rotina capilar mais organizada."
+      "A Progressiva Vegetal Havana alisa enquanto preserva o cuidado com os fios. Escolha seu kit e pague somente quando receber."
   },
+
   trustItems: [
     {
       id: "cash-on-delivery",
-      label: "Pagamento somente na entrega",
+      label: "Pagamento na entrega",
       iconSrc: "/icons/trust/card-credit.svg"
     },
     {
@@ -28,55 +49,59 @@ export const productContent = {
       iconSrc: "/icons/trust/whatsapp.svg"
     }
   ],
+
   benefits: [
     {
       id: "benefit-1",
       title: "Fórmula sem formol",
       description:
-        "Destaque principal do produto conforme as informações apresentadas no rótulo."
+        "Destaque apresentado no rótulo do produto."
     },
     {
       id: "benefit-2",
       title: "Embalagem profissional",
       description:
-        "Conteúdo de 500 ml para uma experiência de uso prática e bem apresentada."
+        "Conteúdo de 500 ml para uma aplicação prática."
     },
     {
       id: "benefit-3",
-      title: "Compra sem antecipação",
+      title: "Pagamento na entrega",
       description:
-        "Você confirma o pedido agora e realiza o pagamento somente quando receber."
+        "Confirme o pedido agora e pague somente ao receber."
     }
   ],
+
   productHighlights: [
     "Embalagem de 500 ml",
     "Uso profissional",
     "Fórmula sem formol",
-    "Aplicação seguindo as instruções oficiais do fabricante"
+    "Aplicação seguindo as instruções do fabricante"
   ],
+
   testimonials: [
     {
       id: "testimonial-1",
       title: "Avaliação em vídeo 01",
       quote:
-        "Substitua este conteúdo por um depoimento verdadeiro, autorizado e sem promessas exageradas.",
+        "Substitua por um depoimento verdadeiro e autorizado.",
       meta: "Espaço reservado para cliente real"
     },
     {
       id: "testimonial-2",
       title: "Avaliação em vídeo 02",
       quote:
-        "Adicione um vídeo vertical mostrando a experiência real de recebimento e utilização.",
+        "Adicione um vídeo vertical mostrando a experiência real.",
       meta: "Formato recomendado: 9:16"
     },
     {
       id: "testimonial-3",
       title: "Avaliação em vídeo 03",
       quote:
-        "Use legendas, boa iluminação e autorização expressa da pessoa que aparece no vídeo.",
+        "Utilize legendas e autorização da pessoa apresentada.",
       meta: "Carregamento sob demanda"
     }
   ],
+
   offers: [
     {
       id: "offer-1",
@@ -84,7 +109,10 @@ export const productContent = {
       quantity: 1,
       originalPrice: "R$ 000,00",
       price: "Defina o preço",
-      benefits: ["1 unidade de 500 ml", "Pagamento na entrega"]
+      benefits: [
+        "1 unidade de 500 ml",
+        "Pagamento na entrega"
+      ]
     },
     {
       id: "offer-2",
@@ -113,30 +141,31 @@ export const productContent = {
       ]
     }
   ],
+
   faq: [
     {
       id: "faq-1",
       question: "Preciso pagar antes do envio?",
       answer:
-        "Não. Nos pedidos elegíveis, o pagamento acontece somente no momento da entrega."
+        "Não. Nos pedidos elegíveis, o pagamento acontece somente na entrega."
     },
     {
       id: "faq-2",
       question: "Quais formas de pagamento são aceitas?",
       answer:
-        "Os métodos disponíveis precisam ser confirmados conforme a transportadora e a região atendida."
+        "Os métodos disponíveis dependem da região e da transportadora."
     },
     {
       id: "faq-3",
       question: "O produto é enviado para qualquer região?",
       answer:
-        "A disponibilidade deve ser validada pelo CEP antes da confirmação definitiva do pedido."
+        "A disponibilidade deve ser validada pelo CEP."
     },
     {
       id: "faq-4",
       question: "Como devo utilizar o produto?",
       answer:
-        "Siga exclusivamente as instruções oficiais do fabricante e as orientações profissionais aplicáveis ao produto."
+        "Siga as instruções oficiais do fabricante e as orientações profissionais aplicáveis."
     }
   ]
 } as const satisfies ProductPageContent;

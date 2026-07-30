@@ -1,59 +1,118 @@
 .root {
+  position: relative;
+  z-index: 50;
+  height: var(--trust-bar-height);
+  overflow: hidden;
   background: var(--color-brand-black);
   color: var(--color-text-on-dark);
 }
 
-.list {
-  display: flex;
-  min-height: 3rem;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(var(--space-4), 4vw, var(--space-8));
-  overflow-x: auto;
-  list-style: none;
-  scrollbar-width: none;
+.container {
+  height: 100%;
 }
 
-.list::-webkit-scrollbar {
-  display: none;
+.desktopList {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(2rem, 5vw, 4rem);
+  list-style: none;
 }
 
 .item {
   display: inline-flex;
   flex: 0 0 auto;
   align-items: center;
-  gap: var(--space-2);
+  gap: 0.55rem;
   color: var(--color-text-on-dark);
-  font-size: var(--font-size-sm);
+  font-size: 0.8rem;
   font-weight: 700;
+  line-height: 1;
   white-space: nowrap;
 }
 
 .iconWrapper {
   display: grid;
   flex: 0 0 auto;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 1.55rem;
+  height: 1.55rem;
   place-items: center;
-  border: 1px solid rgb(202 177 99 / 0.28);
+  border: 1px solid rgb(202 177 99 / 0.35);
   border-radius: 50%;
-  background: rgb(255 255 255 / 0.06);
+  background: rgb(255 255 255 / 0.04);
 }
 
 .icon {
-  width: 1.125rem;
-  height: 1.125rem;
+  width: 0.95rem;
+  height: 0.95rem;
   object-fit: contain;
 }
 
+.mobileSlider {
+  position: relative;
+  display: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.mobileItem {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+
+  color: var(--color-text-on-dark);
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+
+  opacity: 0;
+  transform: translateY(4px);
+  pointer-events: none;
+
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+
+.mobileItemActive {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 @media (max-width: 47.99rem) {
-  .list {
-    justify-content: flex-start;
-    padding-block: var(--space-1);
-    scroll-snap-type: x proximity;
+  .root {
+    height: var(--trust-bar-height-mobile);
   }
 
-  .item {
-    scroll-snap-align: start;
+  .desktopList {
+    display: none;
+  }
+
+  .mobileSlider {
+    display: block;
+  }
+
+  .iconWrapper {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  .icon {
+    width: 0.85rem;
+    height: 0.85rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobileItem {
+    transform: none;
+    transition: opacity 1ms linear;
   }
 }

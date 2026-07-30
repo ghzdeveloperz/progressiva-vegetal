@@ -10,53 +10,90 @@ type HeroSectionProps = Readonly<{
   content: ProductPageContent;
 }>;
 
-export function HeroSection({ content }: HeroSectionProps) {
+const quickProofs = [
+  "Sem formol",
+  "Pagamento na entrega",
+  "Resultado profissional",
+] as const;
+
+export function HeroSection({
+  content,
+}: HeroSectionProps) {
   return (
     <section id="inicio" className={styles.root}>
-      <Container className={styles.grid}>
+      <Image
+        src={content.hero.bannerImage}
+        alt=""
+        fill
+        priority
+        quality={88}
+        sizes="(max-width: 48rem) 1px, 100vw"
+        className={`${styles.backgroundImage} ${styles.desktopImage}`}
+      />
+
+      <Image
+        src={content.hero.mobileBannerImage}
+        alt=""
+        fill
+        priority
+        quality={85}
+        sizes="(max-width: 48rem) 100vw, 1px"
+        className={`${styles.backgroundImage} ${styles.mobileImage}`}
+      />
+
+      <div className={styles.overlay} aria-hidden="true" />
+
+      <Container className={styles.container}>
         <div className={styles.content}>
-          <p className={styles.eyebrow}>{content.hero.eyebrow}</p>
+          <p className={styles.eyebrow}>
+            {content.hero.eyebrow}
+          </p>
+
           <h1 className={styles.title}>
             {content.hero.title}{" "}
             <span>{content.hero.highlightedText}</span>
           </h1>
-          <p className={styles.description}>{content.hero.description}</p>
 
-          <div className={styles.codNotice}>
-            <strong>Você só paga quando receber.</strong>
-            <span>Nenhum pagamento antecipado nesta etapa.</span>
-          </div>
+          <p className={styles.description}>
+            {content.hero.description}
+          </p>
+
+          <ul
+            className={styles.quickProofs}
+            aria-label="Diferenciais do produto"
+          >
+            {quickProofs.map((item) => (
+              <li key={item}>
+                <span aria-hidden="true">✓</span>
+                {item}
+              </li>
+            ))}
+          </ul>
 
           <div className={styles.actions}>
-            <ButtonLink href="#ofertas" variant="cod">
-              Pedir e pagar na entrega
+            <ButtonLink
+              href="#ofertas"
+              variant="primary"
+              className={styles.primaryAction}
+            >
+              Escolher meu kit
+              <span aria-hidden="true">→</span>
             </ButtonLink>
-            <ButtonLink href="#produto" variant="secondary">
-              Conhecer o produto
+
+            <ButtonLink
+              href="#avaliacoes"
+              variant="secondary"
+              className={styles.secondaryAction}
+            >
+              Ver resultados
             </ButtonLink>
           </div>
 
-          <ul className={styles.quickProofs}>
-            <li>500 ml</li>
-            <li>Uso profissional</li>
-            <li>Sem formol</li>
-          </ul>
-        </div>
-
-        <div className={styles.visual}>
-          <div className={styles.glow} aria-hidden="true" />
-          <div className={styles.imageCard}>
-            <Image
-              src={content.productImage}
-              alt={content.productName}
-              width={273}
-              height={730}
-              priority
-              sizes="(max-width: 768px) 70vw, 360px"
-              className={styles.image}
-            />
-          </div>
-          <span className={styles.floatingBadge}>Pagamento na entrega</span>
+          <p className={styles.meta}>
+            Base vegetal
+            <span aria-hidden="true" />
+            500 ml
+          </p>
         </div>
       </Container>
     </section>

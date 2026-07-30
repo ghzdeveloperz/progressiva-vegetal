@@ -72,4 +72,7 @@
 
   --transition-fast: 160ms ease;
   --transition-base: 260ms ease;
+
+  --trust-bar-height: 2.25rem;
+  --trust-bar-height-mobile: 2.1rem;
 }

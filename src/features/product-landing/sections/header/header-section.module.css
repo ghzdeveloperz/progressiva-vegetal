@@ -1,10 +1,31 @@
 .root {
   position: sticky;
-  z-index: 20;
+  z-index: 40;
   top: 0;
-  border-bottom: 1px solid color-mix(in srgb, var(--color-border) 80%, transparent);
-  background: rgb(255 251 248 / 0.92);
-  backdrop-filter: blur(16px);
+  isolation: isolate;
+  margin-bottom: -4.75rem;
+}
+
+.background {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+
+  border-bottom: 1px solid transparent;
+  background: rgb(255 251 248 / 0.9);
+  box-shadow: 0 8px 24px rgb(17 17 17 / 0.05);
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition:
+    opacity 180ms ease-in-out,
+    border-color 180ms ease-in-out;
+}
+
+.outsideHero .background {
+  border-bottom-color: rgb(232 216 207 / 0.7);
+  opacity: 1;
 }
 
 .content {
@@ -17,23 +38,18 @@
 
 .brand {
   display: inline-flex;
+  flex: 0 0 auto;
+  min-width: 0;
   align-items: center;
-  gap: var(--space-3);
-  font-weight: 800;
-  letter-spacing: -0.03em;
 }
 
-.brandMark {
-  display: grid;
-  width: 2.5rem;
-  height: 2.5rem;
-  place-items: center;
-  border: 1px solid var(--color-brand-gold);
-  border-radius: 50%;
-  background: var(--color-brand-black);
-  color: var(--color-brand-gold);
-  font-size: var(--font-size-xs);
-  letter-spacing: 0.08em;
+.brandLogo {
+  display: block;
+  width: auto;
+  height: 2rem;
+  max-width: min(15rem, 36vw);
+  object-fit: contain;
+  object-position: left center;
 }
 
 .navigation {
@@ -45,23 +61,181 @@
   font-weight: 700;
 }
 
+.navigation a {
+  position: relative;
+  transition: color var(--transition-fast);
+}
+
+.navigation a::after {
+  position: absolute;
+  right: 0;
+  bottom: -0.4rem;
+  left: 0;
+
+  height: 2px;
+  border-radius: var(--radius-pill);
+  background: var(--color-brand-gold-dark);
+
+  content: "";
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform var(--transition-fast);
+}
+
 .navigation a:hover {
   color: var(--color-brand-gold-dark);
 }
 
+.navigation a:hover::after {
+  transform: scaleX(1);
+}
+
 .cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   min-height: 2.75rem;
-  padding-block: 0.65rem;
+  padding: 0.65rem 1.35rem;
+
+  border: 1px solid #3e5026;
+  border-radius: 999px;
+
+  background: #3e5026;
+  color: #ffffff;
+
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  box-shadow: 0 10px 24px rgb(17 17 17 / 0.14);
+
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.cta:hover {
+  border-color: #303f1d;
+  background: #303f1d;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgb(17 17 17 / 0.18);
+}
+
+/* Mantém a mesma identidade quando o header sai do Hero */
+.outsideHero .cta {
+  border-color: #3e5026;
+  background: #3e5026;
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgb(17 17 17 / 0.1);
+}
+
+.outsideHero .cta:hover {
+  border-color: #303f1d;
+  background: #303f1d;
+  color: #ffffff;
+}
+/* Fora do Hero */
+.outsideHero .cta {
+  border-color: var(--color-brand-gold);
+  background: transparent;
+  color: var(--color-brand-gold-dark);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.outsideHero .cta:hover {
+  border-color: var(--color-brand-gold-dark);
+  background: rgb(202 177 99 / 0.12);
+  color: var(--color-brand-gold-dark);
 }
 
 @media (max-width: 56rem) {
+  .root {
+    margin-bottom: -4rem;
+  }
+
+  .content {
+    min-height: 4rem;
+  }
+
   .navigation {
     display: none;
   }
+
+  .brand {
+    min-width: 0;
+  }
+
+  .brandLogo {
+    width: auto;
+    height: 2.75rem;
+    max-width: 10rem;
+    object-fit: contain;
+    object-position: left center;
+  }
+
+  .cta {
+    min-height: 2.5rem;
+    padding: 0.55rem 1rem;
+    font-size: 0.78rem;
+  }
 }
 
-@media (max-width: 32rem) {
-  .brand > span:last-child {
-    display: none;
+@media (max-width: 34rem) {
+  .root {
+    margin-bottom: -3.75rem;
+  }
+
+  .content {
+    min-height: 3.75rem;
+    gap: var(--space-3);
+  }
+
+  .brand {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .brandLogo {
+    width: auto;
+    height: 2.35rem;
+    max-width: 8.75rem;
+    object-fit: contain;
+    object-position: left center;
+  }
+
+  .cta {
+    flex: 0 0 auto;
+    min-height: 2.35rem;
+    padding: 0.5rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+  }
+}
+
+@media (max-width: 23rem) {
+  .brandLogo {
+    height: 2.1rem;
+    max-width: 7.5rem;
+  }
+
+  .cta {
+    padding-inline: 0.7rem;
+    font-size: 0.68rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .background,
+  .cta {
+    transition: none;
   }
 }

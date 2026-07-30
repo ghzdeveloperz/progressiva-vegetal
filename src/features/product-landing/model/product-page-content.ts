@@ -36,10 +36,13 @@ export type FaqItem = Readonly<{
 
 export type ProductPageContent = Readonly<{
   brandName: string;
+  brandLogo: string;
   productName: string;
   productImage: string;
 
   hero: Readonly<{
+    bannerImage: string;
+    mobileBannerImage: string;
     eyebrow: string;
     title: string;
     highlightedText: string;
