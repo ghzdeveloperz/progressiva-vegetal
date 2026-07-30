@@ -1,0 +1,35 @@
+.root {
+  padding-block: var(--section-space);
+  background:
+    radial-gradient(circle at 50% 0, rgb(91 36 94 / 0.45), transparent 45%),
+    var(--color-brand-black);
+  color: var(--color-text-on-dark);
+}
+
+.content {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-5);
+  max-width: 52rem;
+  text-align: center;
+}
+
+.eyebrow {
+  color: var(--color-brand-gold);
+  font-size: var(--font-size-sm);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.content h2 {
+  font-size: var(--font-size-3xl);
+  line-height: var(--line-height-title);
+  letter-spacing: -0.04em;
+}
+
+.content > p:not(.eyebrow) {
+  max-width: 42rem;
+  color: #d6d0cb;
+  font-size: var(--font-size-lg);
+}

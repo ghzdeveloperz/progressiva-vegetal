@@ -1,0 +1,42 @@
+.root {
+  padding-block: var(--space-12);
+  border-top: 1px solid #302d2a;
+  background: var(--color-brand-black);
+  color: #d6d0cb;
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-8);
+  grid-template-columns: 1.2fr 0.8fr 0.8fr;
+}
+
+.brand {
+  color: var(--color-text-on-dark);
+  font-size: var(--font-size-xl);
+  font-weight: 900;
+}
+
+.description {
+  max-width: 28rem;
+  margin-top: var(--space-3);
+  color: #a9a19b;
+}
+
+.links,
+.company {
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+}
+
+.links a:hover {
+  color: var(--color-brand-gold);
+}
+
+@media (max-width: 48rem) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
