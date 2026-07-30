@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import {
   useCallback,
   useEffect,
@@ -11,7 +12,6 @@ import { Container } from "@/components/ui/container/container";
 import type { Testimonial } from "../../model/product-page-content";
 
 import styles from "./testimonials-section.module.css";
-import Image from "next/image";
 
 type TestimonialsSectionProps = Readonly<{
   items: readonly Testimonial[];
@@ -20,22 +20,63 @@ type TestimonialsSectionProps = Readonly<{
 export function TestimonialsSection({
   items,
 }: TestimonialsSectionProps) {
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const videoRefs = useRef<
-    Map<string, HTMLVideoElement>
-  >(new Map());
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const carouselRef = useRef<HTMLDivElement | null>(null);
+
+  const videoRefs = useRef<Map<string, HTMLVideoElement>>(
+    new Map(),
+  );
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isSectionVisible, setIsSectionVisible] =
+    useState(false);
+  const [unmutedVideoId, setUnmutedVideoId] = useState<
+    string | null
+  >(null);
 
-  const pauseOtherVideos = useCallback(
-    (activeVideoId: string) => {
+  const pauseAllVideos = useCallback(() => {
+    videoRefs.current.forEach((video) => {
+      video.pause();
+    });
+  }, []);
+
+  const playActiveVideo = useCallback(
+    async (index: number) => {
+      const activeItem = items[index];
+
+      if (!activeItem?.videoSrc) {
+        return;
+      }
+
       videoRefs.current.forEach((video, videoId) => {
-        if (videoId !== activeVideoId && !video.paused) {
+        if (videoId !== activeItem.id) {
           video.pause();
         }
       });
+
+      const activeVideo = videoRefs.current.get(activeItem.id);
+
+      if (!activeVideo) {
+        return;
+      }
+
+      /*
+       * Autoplay com áudio costuma ser bloqueado.
+       * O vídeo inicia mudo e a pessoa pode ativar o som.
+       */
+      activeVideo.muted =
+        unmutedVideoId !== activeItem.id;
+
+      try {
+        await activeVideo.play();
+      } catch {
+        /*
+         * O navegador pode bloquear o autoplay.
+         * Nesse caso, o poster e os controles continuam disponíveis.
+         */
+      }
     },
-    [],
+    [items, unmutedVideoId],
   );
 
   const updateActiveIndex = useCallback(() => {
@@ -71,6 +112,55 @@ export function TestimonialsSection({
 
     setActiveIndex(closestIndex);
   }, []);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+
+    if (!section) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+
+        if (!entry) {
+          return;
+        }
+
+        const isVisible =
+          entry.isIntersecting &&
+          entry.intersectionRatio >= 0.3;
+
+        setIsSectionVisible(isVisible);
+
+        if (!isVisible) {
+          pauseAllVideos();
+        }
+      },
+      {
+        threshold: [0, 0.3, 0.6],
+      },
+    );
+
+    observer.observe(section);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [pauseAllVideos]);
+
+  useEffect(() => {
+    if (!isSectionVisible) {
+      return;
+    }
+
+    void playActiveVideo(activeIndex);
+  }, [
+    activeIndex,
+    isSectionVisible,
+    playActiveVideo,
+  ]);
 
   useEffect(() => {
     const carousel = carouselRef.current;
@@ -110,11 +200,17 @@ export function TestimonialsSection({
     };
   }, [updateActiveIndex]);
 
+  useEffect(() => {
+    return () => {
+      pauseAllVideos();
+    };
+  }, [pauseAllVideos]);
+
   const scrollToIndex = useCallback(
     (index: number) => {
       const carousel = carouselRef.current;
 
-      if (!carousel) {
+      if (!carousel || items.length === 0) {
         return;
       }
 
@@ -140,16 +236,49 @@ export function TestimonialsSection({
     [items.length],
   );
 
-  const handlePrevious = () => {
+  function handlePrevious() {
     scrollToIndex(activeIndex - 1);
-  };
+  }
 
-  const handleNext = () => {
+  function handleNext() {
     scrollToIndex(activeIndex + 1);
-  };
+  }
+
+  async function handleSoundToggle(
+    itemId: string,
+  ) {
+    const video = videoRefs.current.get(itemId);
+
+    if (!video) {
+      return;
+    }
+
+    const shouldEnableSound =
+      unmutedVideoId !== itemId;
+
+    videoRefs.current.forEach(
+      (currentVideo, currentId) => {
+        currentVideo.muted =
+          currentId !== itemId || !shouldEnableSound;
+      },
+    );
+
+    setUnmutedVideoId(
+      shouldEnableSound ? itemId : null,
+    );
+
+    if (video.paused) {
+      try {
+        await video.play();
+      } catch {
+        // A interação manual normalmente libera a reprodução.
+      }
+    }
+  }
 
   return (
     <section
+      ref={sectionRef}
       id="avaliacoes"
       className={styles.root}
       aria-labelledby="testimonials-title"
@@ -170,8 +299,8 @@ export function TestimonialsSection({
 
             <p className={styles.description}>
               Avaliações em vídeo ajudam você a conhecer
-              melhor a aplicação, o acabamento e a experiência
-              com o produto.
+              melhor a aplicação, o acabamento e a
+              experiência com o produto.
             </p>
           </div>
 
@@ -208,105 +337,146 @@ export function TestimonialsSection({
           aria-label="Avaliações em vídeo"
           tabIndex={0}
         >
-          {items.map((item, index) => (
-            <article
-              key={item.id}
-              className={styles.card}
-              aria-label={`Avaliação ${index + 1} de ${items.length
-                }`}
-            >
-              <div className={styles.media}>
-                {item.videoSrc ? (
-                  <video
-                    ref={(element) => {
-                      if (element) {
-                        videoRefs.current.set(
-                          item.id,
-                          element,
-                        );
-                      } else {
-                        videoRefs.current.delete(item.id);
-                      }
-                    }}
-                    className={styles.video}
-                    controls
-                    playsInline
-                    preload="metadata"
-                    poster={item.posterSrc}
-                    onPlay={() =>
-                      pauseOtherVideos(item.id)
-                    }
-                  >
-                    <source
-                      src={item.videoSrc}
-                      type="video/mp4"
-                    />
+          {items.map((item, index) => {
+            const isActive = index === activeIndex;
+            const isUnmuted =
+              unmutedVideoId === item.id;
 
-                    Seu navegador não suporta reprodução de
-                    vídeos.
-                  </video>
-                ) : (
-                  <div
-                    className={styles.videoPlaceholder}
-                    aria-label="Vídeo ainda não adicionado"
-                  >
-                    <span
-                      className={styles.play}
-                      aria-hidden="true"
+            return (
+              <article
+                key={item.id}
+                className={`${styles.card} ${isActive ? styles.activeCard : ""
+                  }`}
+                aria-label={`Avaliação ${index + 1} de ${items.length
+                  }`}
+              >
+                <div className={styles.media}>
+                  {item.videoSrc ? (
+                    <>
+                      <video
+                        ref={(element) => {
+                          if (element) {
+                            videoRefs.current.set(
+                              item.id,
+                              element,
+                            );
+                          } else {
+                            videoRefs.current.delete(
+                              item.id,
+                            );
+                          }
+                        }}
+                        className={styles.video}
+                        playsInline
+                        muted={!isUnmuted}
+                        loop
+                        preload="metadata"
+                        poster={item.posterSrc}
+                        controls={!isActive}
+                        onPlay={() => {
+                          videoRefs.current.forEach(
+                            (video, videoId) => {
+                              if (
+                                videoId !== item.id &&
+                                !video.paused
+                              ) {
+                                video.pause();
+                              }
+                            },
+                          );
+                        }}
+                      >
+                        <source
+                          src={item.videoSrc}
+                          type="video/mp4"
+                        />
+
+                        Seu navegador não suporta reprodução
+                        de vídeos.
+                      </video>
+
+                      {isActive ? (
+                        <button
+                          type="button"
+                          className={styles.soundButton}
+                          onClick={() =>
+                            void handleSoundToggle(item.id)
+                          }
+                          aria-label={
+                            isUnmuted
+                              ? "Desativar som do vídeo"
+                              : "Ativar som do vídeo"
+                          }
+                        >
+                          <span aria-hidden="true">
+                            {isUnmuted ? "Som ativo" : "Ativar som"}
+                          </span>
+                        </button>
+                      ) : null}
+                    </>
+                  ) : (
+                    <div
+                      className={styles.videoPlaceholder}
+                      aria-label="Vídeo ainda não adicionado"
                     >
-                      ▶
-                    </span>
-
-                    <span>Vídeo vertical 9:16</span>
-                  </div>
-                )}
-              </div>
-
-              <div className={styles.cardContent}>
-                <p
-                  className={styles.stars}
-                  aria-label="Avaliação de cinco estrelas"
-                >
-                  ★★★★★
-                </p>
-
-                <h3>{item.title}</h3>
-
-                <blockquote>
-                  “{item.quote}”
-                </blockquote>
-
-                <div className={styles.customer}>
-                  <div>
-                    {item.customerName ? (
-                      <strong>
-                        {item.customerName}
-                      </strong>
-                    ) : null}
-
-                    {item.customerLocation ? (
-                      <span>
-                        {item.customerLocation}
+                      <span
+                        className={styles.play}
+                        aria-hidden="true"
+                      >
+                        ▶
                       </span>
-                    ) : null}
-                  </div>
 
-                  <span className={styles.verified}>
-                    <Image
-                      src="/icons/verified/verified.svg"
-                      alt=""
-                      width={16}
-                      height={16}
-                      className={styles.verifiedIcon}
-                      aria-hidden="true"
-                    />
-
-                    <span>{item.meta}</span>
-                  </span>
+                      <span>Vídeo vertical</span>
+                    </div>
+                  )}
                 </div>
-              </div>
-            </article>
-          ))}
+
+                <div className={styles.cardContent}>
+                  <p
+                    className={styles.stars}
+                    aria-label="Avaliação de cinco estrelas"
+                  >
+                    ★★★★★
+                  </p>
+
+                  <h3>{item.title}</h3>
+
+                  <blockquote>
+                    “{item.quote}”
+                  </blockquote>
+
+                  <div className={styles.customer}>
+                    <div>
+                      {item.customerName ? (
+                        <strong>
+                          {item.customerName}
+                        </strong>
+                      ) : null}
+
+                      {item.customerLocation ? (
+                        <span>
+                          {item.customerLocation}
+                        </span>
+                      ) : null}
+                    </div>
+
+                    <span className={styles.verified}>
+                      <Image
+                        src="/icons/verified/verified.svg"
+                        alt=""
+                        width={16}
+                        height={16}
+                        className={styles.verifiedIcon}
+                        aria-hidden="true"
+                      />
+
+                      <span>{item.meta}</span>
+                    </span>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
         </div>
 
         {items.length > 1 ? (
@@ -323,9 +493,12 @@ export function TestimonialsSection({
                     : ""
                   }`}
                 onClick={() => scrollToIndex(index)}
-                aria-label={`Ir para avaliação ${index + 1}`}
+                aria-label={`Ir para avaliação ${index + 1
+                  }`}
                 aria-current={
-                  index === activeIndex ? "true" : undefined
+                  index === activeIndex
+                    ? "true"
+                    : undefined
                 }
               />
             ))}

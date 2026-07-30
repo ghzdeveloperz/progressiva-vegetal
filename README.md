@@ -517,3 +517,73 @@ Edite `src/features/product-landing/data/product-content.ts` para alterar textos
 - Correção do selo visual da marca.
 - Correção da responsividade do CTA final.
 - Correção do alinhamento do copyright no mobile.
+
+# Milestone 008 — Vídeos Inteligentes na Prova Social
+
+## Funcionalidades
+
+- Reprodução automática do vídeo em destaque ao entrar na seção de avaliações.
+- Pausa automática dos vídeos ao sair da área visível da seção.
+- Reprodução de apenas um vídeo por vez.
+- Troca automática do vídeo ativo conforme a navegação pelo carrossel.
+- Inclusão de botão para ativar e desativar o som.
+- Reprodução automática iniciada sem áudio para compatibilidade com navegadores.
+- Exibição de poster antes do início da reprodução.
+- Reprodução contínua em loop do vídeo ativo.
+- Manutenção da navegação manual entre avaliações.
+- Redução da altura dos vídeos em dispositivos móveis.
+- Destaque visual do card atualmente ativo.
+- Manutenção dos dados de cliente, localização e avaliação verificada.
+
+## Melhorias Técnicas
+
+- Inclusão de `IntersectionObserver` para detectar a visibilidade da seção.
+- Pausa centralizada de todos os vídeos ao sair da viewport.
+- Controle das instâncias de vídeo através de `Map` tipado.
+- Gerenciamento do vídeo ativo com base no índice central do carrossel.
+- Uso de `requestAnimationFrame` para limitar atualizações durante o scroll.
+- Controle individual do estado de áudio dos vídeos.
+- Tratamento seguro de bloqueios de autoplay.
+- Limpeza do observer, eventos e vídeos ao desmontar o componente.
+- Manutenção de `playsInline` para reprodução adequada no mobile.
+- Uso de `preload="metadata"` para reduzir carregamento inicial.
+- Desativação do prefetch e de comportamentos desnecessários no fluxo visual.
+
+## Performance
+
+- Reprodução limitada ao vídeo central.
+- Pausa imediata dos vídeos fora da seção.
+- Carregamento inicial apenas dos metadados.
+- Uso de posters em WebP para evitar telas pretas.
+- Redução das dimensões dos cards no mobile.
+- Transições baseadas apenas em `opacity`, `transform` e `box-shadow`.
+- Ausência de bibliotecas externas para autoplay e detecção de visibilidade.
+- Atualização do índice do carrossel limitada por frame.
+- Suporte a `prefers-reduced-motion`.
+- Redução do consumo de CPU e bateria fora da viewport.
+
+## Refatorações
+
+- Substituição dos controles nativos permanentes por uma experiência visual mais limpa.
+- Inclusão de botão contextual para controle de som.
+- Criação do estado `isSectionVisible`.
+- Criação do estado `unmutedVideoId`.
+- Separação das responsabilidades de pausar, reproduzir e identificar o vídeo ativo.
+- Ajuste da proporção e altura da mídia nos cards.
+- Redução dos paddings do conteúdo no mobile.
+- Aplicação de alinhamento central no `scroll-snap`.
+- Inclusão da classe visual para card ativo.
+- Reorganização dos breakpoints da seção de avaliações.
+
+## Correções
+
+- Correção da tela preta exibida antes da reprodução.
+- Correção do excesso de altura dos vídeos no mobile.
+- Correção da reprodução simultânea de múltiplos vídeos.
+- Correção de vídeos continuando ativos após sair da seção.
+- Correção da reprodução automática com áudio bloqueada pelo navegador.
+- Correção da troca de vídeo ao navegar pelo carrossel.
+- Correção do carregamento visual sem poster.
+- Correção do alinhamento e tamanho dos cards em telas menores.
+- Correção do destaque insuficiente do vídeo central.
+- Correção do consumo desnecessário de recursos fora da área visível.
