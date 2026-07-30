@@ -241,3 +241,76 @@ Edite `src/features/product-landing/data/product-content.ts` para alterar textos
 - Correção do foco após o fechamento do modal.
 - Correção do bloqueio de rolagem durante a visualização do PDF.
 - Correção da responsividade da seção em notebooks e dispositivos móveis.
+# Milestone 004 — Ofertas e Checkout Seguro
+
+## Funcionalidades
+
+- Criação de uma seção exclusiva para comparação dos kits disponíveis.
+- Exibição das opções com uma, duas e três unidades.
+- Aplicação dos valores oficiais de R$198,00, R$247,00 e R$398,00.
+- Destaque visual do kit com duas unidades como principal recomendação.
+- Exibição de preço original e economia nos kits promocionais.
+- Inclusão de benefícios específicos para cada opção.
+- Botões de compra conectados às respectivas rotas de checkout.
+- Navegação interna para checkout através de identificadores controlados.
+- Seção responsiva para desktop, tablet e dispositivos móveis.
+- Aplicação de título principal em fonte Georgia.
+- Inclusão de descrição comercial profissional para orientação da escolha.
+- Card central ampliado em relação às demais opções.
+- Aplicação de aura clara em diagonal atrás do card principal.
+- Inclusão de sombra escura inferior para reforçar a profundidade visual.
+- Remoção de emojis e elementos visuais informais.
+
+## Melhorias Técnicas
+
+- Extensão do tipo `Offer` com `checkoutKey`, `eyebrow` e `savingsLabel`.
+- Centralização dos dados de preço e conteúdo das ofertas.
+- Criação de rota interna para redirecionamento seguro ao checkout.
+- Validação de identificadores de oferta no backend.
+- Redirecionamento de ofertas inválidas para a seção de kits.
+- Aplicação de `Cache-Control: no-store` na rota de checkout.
+- Remoção dos links externos diretos dos componentes visuais.
+- Desativação de prefetch nos links de compra.
+- Separação entre regras de checkout, conteúdo comercial e apresentação.
+- Uso de atributos semânticos e identificação acessível da seção.
+- Estrutura preparada para logs, analytics e regras adicionais de validação.
+
+## Performance
+
+- Ausência de bibliotecas externas para renderização dos cards.
+- Layout construído integralmente com CSS Grid.
+- Uso de gradientes e sombras sem carregamento de assets adicionais.
+- Transições restritas ao botão de compra.
+- Compatibilidade com `prefers-reduced-motion`.
+- Redução de espaçamentos e dimensões excessivas nos cards.
+- Uso de efeitos visuais estáticos para evitar animações desnecessárias.
+- Manutenção do frontend sem processamento de regras de checkout.
+- Redirecionamento executado diretamente pelo backend do Next.js.
+
+## Refatorações
+
+- Substituição da seção genérica de ofertas por uma composição comercial própria.
+- Remoção do componente genérico `SectionHeading` nesta seção.
+- Criação de título e descrição específicos para controle tipográfico.
+- Aplicação direta da fonte Georgia ao título principal.
+- Reorganização da hierarquia de título, quantidade, preço e benefícios.
+- Redução da altura vertical dos cards.
+- Ajuste da escala do card central.
+- Criação das classes `cardInner`, `featuredAura` e variações dos botões.
+- Separação entre card padrão e card destacado.
+- Padronização dos textos de quantidade.
+- Reorganização do conteúdo responsivo em coluna única no mobile.
+
+## Correções
+
+- Correção dos preços exibidos para corresponder aos links oficiais.
+- Correção do link de compra de cada kit.
+- Correção da exposição direta dos links externos no componente.
+- Correção do excesso de altura dos cards.
+- Correção da falta de destaque visual do card central.
+- Correção da aura pouco visível atrás da oferta principal.
+- Correção da sombra inferior com aplicação de tom preto.
+- Correção da tipografia do título principal da seção.
+- Correção de textos provisórios e pouco comerciais.
+- Correção da escala dos cards laterais.
+- Correção da disposição da seção em telas menores.

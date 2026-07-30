@@ -139,39 +139,48 @@ export const productContent = {
   offers: [
     {
       id: "offer-1",
-      name: "Experimente",
+      name: "Progressiva Vegetal Havana Sem Formol",
       quantity: 1,
-      originalPrice: "R$ 000,00",
-      price: "Defina o preço",
+      price: "R$198,00",
+      eyebrow: "Ideal para experimentar",
+      checkoutKey: "kit-1",
       benefits: [
-        "1 unidade de 500 ml",
-        "Pagamento na entrega"
+        "Frasco de 500 ml",
+        "Sem formol",
+        "Rende diversas aplicações"
       ]
     },
     {
       id: "offer-2",
-      name: "Kit mais escolhido",
+      name: "Progressiva Vegetal Havana Sem Formol",
       quantity: 2,
-      originalPrice: "R$ 000,00",
-      price: "Defina o preço",
-      badge: "Mais escolhido",
+      price: "R$247,00",
+      originalPrice: "R$298,00",
+      badge: "Mais vendido",
+      eyebrow: "Oferta por tempo limitado",
+      savingsLabel: "Economize R$51",
       featured: true,
+      checkoutKey: "kit-2",
       benefits: [
-        "2 unidades de 500 ml",
-        "Melhor custo por unidade",
-        "Pagamento na entrega"
+        "Dois frascos de 500 ml",
+        "Melhor custo por frasco",
+        "Ótimo para revenda inicial"
       ]
     },
     {
       id: "offer-3",
-      name: "Kit profissional",
+      name: "Progressiva Vegetal Havana Sem Formol",
       quantity: 3,
-      originalPrice: "R$ 000,00",
-      price: "Defina o preço",
+      price: "R$398,00",
+      originalPrice: "R$450,00",
+      badge: "Melhor custo-benefício",
+      eyebrow: "Estoque para o salão",
+      savingsLabel: "Economize R$52",
+      checkoutKey: "kit-3",
       benefits: [
-        "3 unidades de 500 ml",
-        "Maior economia",
-        "Pagamento na entrega"
+        "Três frascos de 500 ml",
+        "Maior economia total",
+        "Perfeito para profissionais"
       ]
     }
   ],

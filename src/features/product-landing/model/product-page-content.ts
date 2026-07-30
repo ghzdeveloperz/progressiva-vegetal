@@ -46,7 +46,10 @@ export type Offer = Readonly<{
   price: string;
   originalPrice?: string;
   badge?: string;
+  eyebrow?: string;
+  savingsLabel?: string;
   featured?: boolean;
+  checkoutKey: "kit-1" | "kit-2" | "kit-3";
   benefits: readonly string[];
 }>;
 
