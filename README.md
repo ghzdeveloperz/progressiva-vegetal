@@ -454,3 +454,66 @@ Edite `src/features/product-landing/data/product-content.ts` para alterar textos
 - Correção do espaçamento interno das respostas no mobile.
 - Correção das margens padrão dos títulos e parágrafos.
 - Correção do comportamento para usuários com redução de movimento.
+# Milestone 007 — CTA Final e Rodapé Institucional
+
+## Funcionalidades
+
+- Reformulação completa da seção final da landing page.
+- Criação de CTA final com direcionamento para a seção de ofertas.
+- Inclusão de título comercial em fonte Georgia.
+- Inclusão de descrição objetiva para orientar a escolha do kit.
+- Criação de rodapé institucional com identidade visual da Havana.
+- Inclusão de descrição resumida do produto no rodapé.
+- Inclusão de navegação interna para produto, resultados, ofertas, pagamento e dúvidas.
+- Inclusão de informações de atendimento e cobertura.
+- Exibição automática do ano atual no copyright.
+- Inclusão de link da marca para retorno ao início da página.
+- Substituição do selo textual pelo ícone SVG verificado.
+- Estrutura responsiva para desktop, tablet e mobile.
+
+## Melhorias Técnicas
+
+- Separação entre CTA final e rodapé institucional.
+- Uso de `next/link` para navegação interna.
+- Uso de `next/image` para renderização otimizada do ícone.
+- Uso de constantes tipadas para os links de navegação.
+- Aplicação de elementos semânticos como `footer` e `nav`.
+- Inclusão de labels acessíveis nas áreas de navegação.
+- Uso de ano dinâmico com `new Date().getFullYear()`.
+- Organização do layout com CSS Grid e Flexbox.
+- Preparação do código para futura implementação de páginas legais.
+
+## Performance
+
+- Ausência de bibliotecas externas.
+- Ícone carregado como SVG otimizado.
+- Layout baseado em CSS nativo.
+- Transições aplicadas apenas nos links interativos.
+- Suporte a `prefers-reduced-motion`.
+- Uso de estrutura responsiva sem cálculos em JavaScript.
+- Reutilização dos tokens visuais existentes no projeto.
+
+## Refatorações
+
+- Remoção do antigo rodapé escuro.
+- Remoção dos textos provisórios de CNPJ e atendimento.
+- Remoção da mensagem técnica sobre checkout futuro.
+- Substituição do antigo símbolo com a letra “Y”.
+- Aplicação do ícone `verifed.svg` na assinatura da marca.
+- Reorganização das colunas de marca, navegação e atendimento.
+- Simplificação da área inferior do rodapé.
+- Remoção temporária dos links de políticas da interface.
+- Manutenção comentada das políticas para ajuste futuro.
+- Aplicação de tipografia Georgia na marca e no CTA final.
+
+## Correções
+
+- Correção de informações provisórias exibidas no rodapé.
+- Correção da inconsistência visual entre o rodapé e o restante da landing page.
+- Correção do alinhamento das colunas em telas menores.
+- Correção do espaçamento entre marca, navegação e atendimento.
+- Correção da ausência de navegação interna no rodapé.
+- Correção da exibição das políticas antes de sua implementação.
+- Correção do selo visual da marca.
+- Correção da responsividade do CTA final.
+- Correção do alinhamento do copyright no mobile.

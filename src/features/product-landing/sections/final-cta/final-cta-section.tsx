@@ -5,15 +5,31 @@ import styles from "./final-cta-section.module.css";
 
 export function FinalCtaSection() {
   return (
-    <section className={styles.root}>
+    <section
+      className={styles.root}
+      aria-labelledby="final-cta-title"
+    >
       <Container className={styles.content}>
-        <p className={styles.eyebrow}>Compra simples e transparente</p>
-        <h2>Peça agora. Pague somente quando receber.</h2>
-        <p>
-          Na próxima etapa, conectaremos este botão ao checkout seguro e à validação real de CEP, preço e disponibilidade.
-        </p>
-        <ButtonLink href="#ofertas" variant="cod">
-          Escolher minha opção
+        <div className={styles.text}>
+          <p className={styles.eyebrow}>
+            Escolha com tranquilidade
+          </p>
+
+          <h2 id="final-cta-title">
+            Encontre o kit ideal para a sua rotina
+          </h2>
+
+          <p>
+            Compare as opções disponíveis e selecione a quantidade
+            mais adequada para o seu uso.
+          </p>
+        </div>
+
+        <ButtonLink
+          href="#ofertas"
+          className={styles.button}
+        >
+          Ver opções disponíveis
         </ButtonLink>
       </Container>
     </section>
