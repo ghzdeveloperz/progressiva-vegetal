@@ -737,3 +737,42 @@ Edite `src/features/product-landing/data/product-content.ts` para alterar textos
 - Correção da disposição dos cards em telas pequenas.
 - Correção do alinhamento do controle central.
 - Correção da ordem da seção dentro da landing page.
+
+
+# Milestone 012 — Ofertas com Urgência e Destaque Responsivo
+
+## Funcionalidades
+- Adicionado cronômetro promocional persistente no header.
+- Adicionado o mesmo cronômetro dentro do card de oferta em destaque.
+- Implementado selo centralizado “Mais popular” apenas no card principal.
+- Restaurado o carrossel horizontal de ofertas no mobile.
+- Restaurados os seletores de quantidade para navegação entre os kits.
+
+## Melhorias Técnicas
+- Centralizada a lógica do cronômetro em um hook reutilizável.
+- Sincronizado o prazo promocional entre header e card destacado.
+- Mantido timestamp absoluto no `localStorage` para evitar reinício ao recarregar a página.
+- Melhorada a acessibilidade com `role="timer"`, rótulos e suporte a movimento reduzido.
+- Removida a dependência das antigas tags de produto nos cards.
+
+## Performance
+- Atualização do cronômetro limitada a uma execução por segundo.
+- Uso de `requestAnimationFrame` para calcular o card ativo durante o scroll.
+- Controle de scroll programático para evitar atualizações intermediárias desnecessárias.
+- Eventos de rolagem configurados como passivos.
+- Limpeza correta de intervalos, timeouts e listeners.
+
+## Refatorações
+- Restaurada a estrutura original animada do card em destaque.
+- Reorganizado o componente de ofertas para suportar desktop e carrossel mobile.
+- Simplificada a renderização dos badges.
+- Separados os estados de card ativo, oferta destacada e oferta expirada.
+- Padronizados nomes e responsabilidades dos estilos.
+
+## Correções
+- Corrigida a exibição vertical dos cards no mobile.
+- Restaurada a aura pulsante ao redor do card principal.
+- Restaurado o brilho branco diagonal animado.
+- Restaurada a animação flutuante do card em destaque.
+- Corrigido o posicionamento central do selo promocional.
+- Corrigida a sincronização visual do cronômetro entre diferentes seções.

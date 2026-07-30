@@ -49,6 +49,13 @@ export type Offer = Readonly<{
   eyebrow?: string;
   savingsLabel?: string;
   featured?: boolean;
+
+  /**
+   * Tags curtas exibidas no card.
+   * Exemplos: "Tiara", "Brinco", "Pulseira".
+   */
+  tags?: readonly string[];
+
   checkoutKey: "kit-1" | "kit-2" | "kit-3";
   benefits: readonly string[];
 }>;

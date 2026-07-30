@@ -9,6 +9,12 @@ import {
 } from "react";
 
 import { Container } from "@/components/ui/container/container";
+
+import {
+  formatOfferCountdown,
+  useOfferCountdown,
+} from "../../hooks/use-offer-countdown";
+
 import type { Offer } from "../../model/product-page-content";
 
 import styles from "./offers-section.module.css";
@@ -19,93 +25,121 @@ type OffersSectionProps = Readonly<{
 
 const PROGRAMMATIC_SCROLL_TIMEOUT = 700;
 
-function getQuantityLabel(quantity: number) {
-  if (quantity === 1) {
-    return "1 unidade";
-  }
-
-  return `${quantity} unidades`;
+function getQuantityLabel(quantity: number): string {
+  return quantity === 1
+    ? "1 unidade"
+    : `${quantity} unidades`;
 }
 
-function getQuantityUnitLabel(quantity: number) {
-  return quantity === 1 ? "unidade" : "unidades";
+function getQuantityUnitLabel(quantity: number): string {
+  return quantity === 1
+    ? "unidade"
+    : "unidades";
 }
 
 export function OffersSection({
   offers,
 }: OffersSectionProps) {
-  const carouselRef = useRef<HTMLDivElement | null>(null);
+  const carouselRef =
+    useRef<HTMLDivElement | null>(null);
 
   const programmaticScrollRef = useRef(false);
+
   const programmaticScrollTimeoutRef =
     useRef<number | null>(null);
 
+  const remainingSeconds = useOfferCountdown();
+
+  const countdown =
+    formatOfferCountdown(remainingSeconds);
+
+  const hasExpired = remainingSeconds === 0;
+
   const featuredIndex = Math.max(
-    offers.findIndex((offer) => offer.featured),
+    offers.findIndex(
+      (offer) => offer.featured === true,
+    ),
     0,
   );
 
   const [activeIndex, setActiveIndex] =
     useState(featuredIndex);
 
-  const clearProgrammaticScrollTimeout = useCallback(() => {
-    if (programmaticScrollTimeoutRef.current === null) {
-      return;
-    }
+  const clearProgrammaticScrollTimeout =
+    useCallback(() => {
+      if (
+        programmaticScrollTimeoutRef.current === null
+      ) {
+        return;
+      }
 
-    window.clearTimeout(
-      programmaticScrollTimeoutRef.current,
-    );
+      window.clearTimeout(
+        programmaticScrollTimeoutRef.current,
+      );
 
-    programmaticScrollTimeoutRef.current = null;
-  }, []);
+      programmaticScrollTimeoutRef.current = null;
+    }, []);
 
-  const finishProgrammaticScroll = useCallback(() => {
-    clearProgrammaticScrollTimeout();
-    programmaticScrollRef.current = false;
-  }, [clearProgrammaticScrollTimeout]);
+  const finishProgrammaticScroll =
+    useCallback(() => {
+      clearProgrammaticScrollTimeout();
 
-  const updateActiveCardFromScroll = useCallback(() => {
-    if (programmaticScrollRef.current) {
-      return;
-    }
+      programmaticScrollRef.current = false;
+    }, [clearProgrammaticScrollTimeout]);
 
-    const carousel = carouselRef.current;
+  const updateActiveCardFromScroll =
+    useCallback(() => {
+      if (programmaticScrollRef.current) {
+        return;
+      }
 
-    if (!carousel || carousel.children.length === 0) {
-      return;
-    }
+      const carousel = carouselRef.current;
 
-    const carouselRect = carousel.getBoundingClientRect();
-    const carouselCenter =
-      carouselRect.left + carouselRect.width / 2;
+      if (
+        !carousel ||
+        carousel.children.length === 0
+      ) {
+        return;
+      }
 
-    let closestIndex = 0;
-    let smallestDistance = Number.POSITIVE_INFINITY;
+      const carouselRect =
+        carousel.getBoundingClientRect();
 
-    Array.from(carousel.children).forEach(
-      (child, index) => {
-        const cardRect = child.getBoundingClientRect();
-        const cardCenter =
-          cardRect.left + cardRect.width / 2;
+      const carouselCenter =
+        carouselRect.left +
+        carouselRect.width / 2;
 
-        const distance = Math.abs(
-          carouselCenter - cardCenter,
-        );
+      let closestIndex = 0;
 
-        if (distance < smallestDistance) {
-          smallestDistance = distance;
-          closestIndex = index;
-        }
-      },
-    );
+      let smallestDistance =
+        Number.POSITIVE_INFINITY;
 
-    setActiveIndex((currentIndex) => {
-      return currentIndex === closestIndex
-        ? currentIndex
-        : closestIndex;
-    });
-  }, []);
+      Array.from(carousel.children).forEach(
+        (child, index) => {
+          const cardRect =
+            child.getBoundingClientRect();
+
+          const cardCenter =
+            cardRect.left +
+            cardRect.width / 2;
+
+          const distance = Math.abs(
+            carouselCenter - cardCenter,
+          );
+
+          if (distance < smallestDistance) {
+            smallestDistance = distance;
+            closestIndex = index;
+          }
+        },
+      );
+
+      setActiveIndex((currentIndex) => {
+        return currentIndex === closestIndex
+          ? currentIndex
+          : closestIndex;
+      });
+    }, []);
 
   const scrollToOffer = useCallback(
     (
@@ -119,23 +153,22 @@ export function OffersSection({
       }
 
       const normalizedIndex =
-        (index + offers.length) % offers.length;
+        (index + offers.length) %
+        offers.length;
 
-      const targetCard = carousel.children.item(
-        normalizedIndex,
-      ) as HTMLElement | null;
+      const targetCard =
+        carousel.children.item(
+          normalizedIndex,
+        ) as HTMLElement | null;
 
       if (!targetCard) {
         return;
       }
 
-      /*
-       * Mantém o seletor escolhido ativo durante toda a
-       * rolagem programática. Isso evita que o estado passe
-       * rapidamente pelos cards intermediários.
-       */
       programmaticScrollRef.current = true;
+
       clearProgrammaticScrollTimeout();
+
       setActiveIndex(normalizedIndex);
 
       targetCard.scrollIntoView({
@@ -173,9 +206,10 @@ export function OffersSection({
       return;
     }
 
-    const frameId = window.requestAnimationFrame(() => {
-      scrollToOffer(featuredIndex, "auto");
-    });
+    const frameId =
+      window.requestAnimationFrame(() => {
+        scrollToOffer(featuredIndex, "auto");
+      });
 
     return () => {
       window.cancelAnimationFrame(frameId);
@@ -199,10 +233,12 @@ export function OffersSection({
         return;
       }
 
-      frameId = window.requestAnimationFrame(() => {
-        frameId = null;
-        updateActiveCardFromScroll();
-      });
+      frameId =
+        window.requestAnimationFrame(() => {
+          frameId = null;
+
+          updateActiveCardFromScroll();
+        });
     };
 
     const handleScrollEnd = () => {
@@ -215,16 +251,16 @@ export function OffersSection({
     };
 
     const handlePointerDown = () => {
-      /*
-       * Quando a pessoa começa a arrastar manualmente,
-       * qualquer navegação programática anterior é cancelada.
-       */
       finishProgrammaticScroll();
     };
 
-    carousel.addEventListener("scroll", handleScroll, {
-      passive: true,
-    });
+    carousel.addEventListener(
+      "scroll",
+      handleScroll,
+      {
+        passive: true,
+      },
+    );
 
     carousel.addEventListener(
       "scrollend",
@@ -279,7 +315,7 @@ export function OffersSection({
       aria-labelledby="offers-section-title"
     >
       <Container>
-        <div className={styles.sectionHeading}>
+        <header className={styles.sectionHeading}>
           <h2
             id="offers-section-title"
             className={styles.sectionTitle}
@@ -288,18 +324,19 @@ export function OffersSection({
           </h2>
 
           <p className={styles.sectionDescription}>
-            Compare os kits disponíveis e escolha a opção mais
-            adequada para a sua rotina, necessidade e frequência de
-            uso.
+            Compare os kits disponíveis e escolha a
+            opção mais adequada para sua rotina,
+            necessidade e frequência de uso.
           </p>
-        </div>
+        </header>
 
         <div
           className={styles.mobileSelectors}
           aria-label="Selecionar quantidade do kit"
         >
           {offers.map((offer, index) => {
-            const isActive = activeIndex === index;
+            const isActive =
+              activeIndex === index;
 
             return (
               <button
@@ -310,16 +347,22 @@ export function OffersSection({
                     ? styles.mobileSelectorActive
                     : ""
                 }`}
-                onClick={() => scrollToOffer(index)}
+                onClick={() =>
+                  scrollToOffer(index)
+                }
                 aria-label={`Selecionar kit com ${getQuantityLabel(
                   offer.quantity,
                 )}`}
                 aria-pressed={isActive}
               >
-                <strong>{offer.quantity}</strong>
+                <strong>
+                  {offer.quantity}
+                </strong>
 
                 <span>
-                  {getQuantityUnitLabel(offer.quantity)}
+                  {getQuantityUnitLabel(
+                    offer.quantity,
+                  )}
                 </span>
               </button>
             );
@@ -334,57 +377,74 @@ export function OffersSection({
           tabIndex={0}
         >
           {offers.map((offer, index) => {
-            const isActive = activeIndex === index;
+            const isFeatured =
+              offer.featured === true;
+
+            const isActive =
+              activeIndex === index;
+
+            const isFeaturedExpired =
+              isFeatured && hasExpired;
 
             return (
               <article
                 key={offer.id}
                 className={`${styles.card} ${
-                  offer.featured ? styles.featured : ""
+                  isFeatured
+                    ? styles.featured
+                    : ""
                 } ${
-                  isActive ? styles.activeCard : ""
+                  isActive
+                    ? styles.activeCard
+                    : ""
                 }`}
                 aria-label={`${getQuantityLabel(
                   offer.quantity,
                 )}, ${offer.price}`}
               >
-                {offer.featured ? (
+                {isFeatured ? (
                   <>
                     <div
-                      className={styles.featuredAura}
+                      className={
+                        styles.featuredAura
+                      }
                       aria-hidden="true"
                     />
 
                     <div
-                      className={styles.featuredOrbit}
+                      className={
+                        styles.featuredOrbit
+                      }
                       aria-hidden="true"
                     />
                   </>
                 ) : null}
 
-                {offer.badge ? (
+                {isFeatured ? (
                   <span
-                    className={`${styles.badge} ${
-                      offer.featured
-                        ? styles.badgeFeatured
-                        : styles.badgeDefault
-                    }`}
+                    className={styles.featuredBadge}
                   >
-                    {offer.badge}
+                    MELHOR CUSTO
                   </span>
                 ) : null}
 
                 <div className={styles.cardInner}>
-                  {offer.featured ? (
+                  {isFeatured ? (
                     <div
-                      className={styles.featuredLight}
+                      className={
+                        styles.featuredLight
+                      }
                       aria-hidden="true"
                     />
                   ) : null}
 
-                  <div className={styles.header}>
+                  <header className={styles.header}>
                     {offer.eyebrow ? (
-                      <p className={styles.eyebrow}>
+                      <p
+                        className={
+                          styles.eyebrow
+                        }
+                      >
                         {offer.eyebrow}
                       </p>
                     ) : null}
@@ -394,13 +454,19 @@ export function OffersSection({
                     </h3>
 
                     <p className={styles.quantity}>
-                      {getQuantityLabel(offer.quantity)}
+                      {getQuantityLabel(
+                        offer.quantity,
+                      )}
                     </p>
-                  </div>
+                  </header>
 
                   <div className={styles.pricing}>
                     {offer.originalPrice ? (
-                      <p className={styles.originalPrice}>
+                      <p
+                        className={
+                          styles.originalPrice
+                        }
+                      >
                         {offer.originalPrice}
                       </p>
                     ) : (
@@ -417,11 +483,70 @@ export function OffersSection({
                     </p>
 
                     {offer.savingsLabel ? (
-                      <span className={styles.savingsChip}>
+                      <span
+                        className={
+                          styles.savingsChip
+                        }
+                      >
                         {offer.savingsLabel}
                       </span>
                     ) : null}
                   </div>
+
+                  {isFeatured ? (
+                    <div
+                      className={
+                        styles.offerDeadline
+                      }
+                    >
+                      <div
+                        className={
+                          styles.offerDeadlineMessage
+                        }
+                      >
+                        <span
+                          className={
+                            styles.offerDeadlineTitle
+                          }
+                        >
+                          Preço promocional
+                        </span>
+
+                        <span
+                          className={
+                            styles.offerDeadlineDescription
+                          }
+                        >
+                          disponível por tempo limitado
+                        </span>
+                      </div>
+
+                      {hasExpired ? (
+                        <span
+                          className={
+                            styles.offerDeadlineExpired
+                          }
+                          role="status"
+                        >
+                          Encerrada
+                        </span>
+                      ) : (
+                        <time
+                          className={
+                            styles.offerDeadlineTime
+                          }
+                          role="timer"
+                          aria-label={
+                            remainingSeconds === null
+                              ? "Carregando prazo da oferta"
+                              : `${countdown.minutes} minutos e ${countdown.seconds} segundos restantes`
+                          }
+                        >
+                          {countdown.formatted}
+                        </time>
+                      )}
+                    </div>
+                  ) : null}
 
                   <div
                     className={styles.divider}
@@ -429,22 +554,39 @@ export function OffersSection({
                   />
 
                   <ul className={styles.benefits}>
-                    {offer.benefits.map((benefit) => (
-                      <li key={benefit}>{benefit}</li>
-                    ))}
+                    {offer.benefits.map(
+                      (benefit) => (
+                        <li
+                          key={`${offer.id}-${benefit}`}
+                        >
+                          {benefit}
+                        </li>
+                      ),
+                    )}
                   </ul>
 
-                  <Link
-                    href={`/api/checkout?offer=${offer.checkoutKey}`}
-                    className={`${styles.cta} ${
-                      offer.featured
-                        ? styles.ctaFeatured
-                        : styles.ctaDefault
-                    }`}
-                    prefetch={false}
-                  >
-                    Comprar agora
-                  </Link>
+                  {isFeaturedExpired ? (
+                    <span
+                      className={`${styles.cta} ${styles.ctaFeatured} ${styles.ctaDisabled}`}
+                      aria-disabled="true"
+                    >
+                      Oferta encerrada
+                    </span>
+                  ) : (
+                    <Link
+                      href={`/api/checkout?offer=${encodeURIComponent(
+                        offer.checkoutKey,
+                      )}`}
+                      className={`${styles.cta} ${
+                        isFeatured
+                          ? styles.ctaFeatured
+                          : styles.ctaDefault
+                      }`}
+                      prefetch={false}
+                    >
+                      Comprar agora
+                    </Link>
+                  )}
                 </div>
               </article>
             );
@@ -452,8 +594,9 @@ export function OffersSection({
         </div>
 
         <p className={styles.disclaimer}>
-          Checkout em ambiente seguro. O valor final, a cobertura e
-          a disponibilidade devem ser confirmados durante a
+          Checkout em ambiente seguro. O valor
+          final, a cobertura e a disponibilidade
+          devem ser confirmados durante a
           finalização do pedido.
         </p>
       </Container>

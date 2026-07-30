@@ -13,6 +13,10 @@
     #f7f4ee;
 }
 
+/* =========================================================
+   CABEÇALHO DA SEÇÃO
+   ========================================================= */
+
 .sectionHeading {
   display: grid;
   justify-items: center;
@@ -51,7 +55,10 @@
   text-wrap: balance;
 }
 
-/* Visível somente no carrossel mobile */
+/* =========================================================
+   SELETORES MOBILE
+   ========================================================= */
+
 .mobileSelectors {
   display: none;
 }
@@ -129,11 +136,6 @@
   outline-offset: 3px;
 }
 
-/*
- * A cor é aplicada explicitamente ao botão e também
- * aos dois elementos internos. Isso evita que estilos
- * globais de strong/span deixem o texto escuro.
- */
 .mobileSelectorActive {
   border-color: #4a5d2d;
 
@@ -152,6 +154,10 @@
   color: #ffffff !important;
 }
 
+/* =========================================================
+   GRID E CARROSSEL
+   ========================================================= */
+
 .grid {
   display: grid;
   align-items: center;
@@ -161,6 +167,10 @@
 
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
+
+/* =========================================================
+   CARD
+   ========================================================= */
 
 .card {
   position: relative;
@@ -229,6 +239,83 @@
   animation:
     featuredFloat 4.8s ease-in-out infinite;
 }
+
+/* =========================================================
+   SELO CENTRAL DO CARD DESTACADO
+   ========================================================= */
+
+.featuredBadge {
+  position: absolute;
+  top: 1.15rem;
+  left: 50%;
+  z-index: 7;
+
+  display: inline-flex;
+  width: fit-content;
+  min-height: 2.45rem;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0.58rem 1.15rem;
+
+  border: 1px solid rgb(232 209 154 / 0.34);
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgb(129 112 55 / 0.96),
+      rgb(98 84 38 / 0.94)
+    );
+
+  color: #fff1c9;
+
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  transform: translate(-50%, -50%);
+
+  box-shadow:
+    0 14px 30px rgb(0 0 0 / 0.2),
+    0 0 0 1px rgb(255 236 186 / 0.06),
+    inset 0 1px 0 rgb(255 248 225 / 0.16);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.featuredBadge::before,
+.featuredBadge::after {
+  position: absolute;
+  top: 50%;
+
+  width: 0.9rem;
+  height: 1px;
+
+  background: rgb(240 220 170 / 0.75);
+
+  content: "";
+
+  opacity: 0.38;
+
+  transform: translateY(-50%);
+}
+
+.featuredBadge::before {
+  left: -0.7rem;
+}
+
+.featuredBadge::after {
+  right: -0.7rem;
+}
+
+/* =========================================================
+   AURA, PULSO E BRILHO DIAGONAL
+   ========================================================= */
 
 .featuredAura {
   position: absolute;
@@ -314,98 +401,13 @@
     featuredShine 5.2s ease-in-out infinite;
 }
 
-.badge {
-  position: absolute;
-  top: 1.15rem;
-  left: 50%;
-  z-index: 6;
-
-  display: inline-flex;
-  width: fit-content;
-  min-height: 2.45rem;
-  align-items: center;
-  justify-content: center;
-
-  padding: 0.58rem 1.15rem;
-
-  border-radius: 999px;
-
-  font-size: 0.74rem;
-  font-weight: 900;
-  letter-spacing: 0.16em;
-  line-height: 1;
-  text-transform: uppercase;
-  white-space: nowrap;
-
-  transform: translate(-50%, -50%);
-
-  box-shadow:
-    0 10px 24px rgb(0 0 0 / 0.12),
-    0 2px 8px rgb(0 0 0 / 0.06);
-
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-.badge::before,
-.badge::after {
-  position: absolute;
-  top: 50%;
-
-  width: 0.9rem;
-  height: 1px;
-
-  content: "";
-  opacity: 0.38;
-
-  transform: translateY(-50%);
-}
-
-.badge::before {
-  left: -0.7rem;
-}
-
-.badge::after {
-  right: -0.7rem;
-}
-
-.badgeDefault {
-  border: 1px solid #d9c29a;
-
-  background: rgb(255 251 244 / 0.97);
-  color: #a67a32;
-}
-
-.badgeDefault::before,
-.badgeDefault::after {
-  background: #c6a15f;
-}
-
-.badgeFeatured {
-  border: 1px solid rgb(232 209 154 / 0.34);
-
-  background:
-    linear-gradient(
-      180deg,
-      rgb(129 112 55 / 0.94),
-      rgb(98 84 38 / 0.92)
-    );
-
-  color: #fff1c9;
-
-  box-shadow:
-    0 14px 30px rgb(0 0 0 / 0.2),
-    0 0 0 1px rgb(255 236 186 / 0.06),
-    inset 0 1px 0 rgb(255 248 225 / 0.16);
-}
-
-.badgeFeatured::before,
-.badgeFeatured::after {
-  background: rgb(240 220 170 / 0.75);
-}
+/* =========================================================
+   CONTEÚDO DO CARD
+   ========================================================= */
 
 .header,
 .pricing,
+.offerDeadline,
 .divider,
 .benefits,
 .cta {
@@ -461,6 +463,10 @@
 .featured .quantity {
   color: #d3cdbf;
 }
+
+/* =========================================================
+   PREÇO
+   ========================================================= */
 
 .pricing {
   display: grid;
@@ -526,8 +532,84 @@
   color: #e4cd9b;
 }
 
+/* =========================================================
+   CRONÔMETRO
+   ========================================================= */
+
+.offerDeadline {
+  display: flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+
+  padding-block: 0.05rem;
+}
+
+.offerDeadlineMessage {
+  display: grid;
+  gap: 0.12rem;
+}
+
+.offerDeadlineTitle {
+  color: #e5ce9a;
+
+  font-size: 0.67rem;
+  font-weight: 900;
+  letter-spacing: 0.09em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.offerDeadlineDescription {
+  max-width: 10rem;
+
+  color: rgb(238 231 220 / 0.7);
+
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.offerDeadlineTime {
+  flex-shrink: 0;
+
+  min-width: 4.5rem;
+
+  color: #fff6dc;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 1.28rem;
+  line-height: 1;
+  letter-spacing: 0.035em;
+  text-align: right;
+
+  font-variant-numeric: tabular-nums;
+
+  text-shadow:
+    0 6px 18px rgb(0 0 0 / 0.18);
+}
+
+.offerDeadlineExpired {
+  color: #fff2cc;
+
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   DIVISOR E BENEFÍCIOS
+   ========================================================= */
+
 .divider {
   height: 1px;
+
   background: #ebe4da;
 }
 
@@ -544,6 +626,9 @@
 .benefits {
   display: grid;
   gap: 0.72rem;
+
+  margin: 0;
+  padding: 0;
 
   list-style: none;
 }
@@ -579,6 +664,10 @@
   color: #d7b36d;
 }
 
+/* =========================================================
+   BOTÕES
+   ========================================================= */
+
 .cta {
   display: inline-flex;
   width: 100%;
@@ -594,6 +683,7 @@
   font-size: 0.84rem;
   font-weight: 800;
   letter-spacing: 0.14em;
+  text-align: center;
   text-transform: uppercase;
   text-decoration: none;
 
@@ -635,6 +725,19 @@
     0 16px 32px rgb(0 0 0 / 0.24);
 }
 
+.ctaDisabled {
+  cursor: not-allowed;
+  opacity: 0.68;
+}
+
+.ctaDisabled:hover {
+  transform: none;
+}
+
+/* =========================================================
+   DISCLAIMER
+   ========================================================= */
+
 .disclaimer {
   max-width: 58rem;
 
@@ -646,6 +749,10 @@
   line-height: 1.6;
   text-align: center;
 }
+
+/* =========================================================
+   ANIMAÇÕES
+   ========================================================= */
 
 @keyframes featuredFloat {
   0%,
@@ -724,11 +831,19 @@
   }
 }
 
+/* =========================================================
+   DESKTOP
+   ========================================================= */
+
 @media (min-width: 69rem) {
   .card:not(.featured) {
     transform: scale(0.965);
   }
 }
+
+/* =========================================================
+   TABLET E CARROSSEL
+   ========================================================= */
 
 @media (max-width: 68rem) {
   .root {
@@ -760,6 +875,7 @@
       1.5rem;
 
     overflow-x: auto;
+
     overscroll-behavior-inline: contain;
 
     grid-auto-columns:
@@ -809,12 +925,12 @@
     transform: scale(1);
   }
 
-  .badge {
+  .featuredBadge {
     min-height: 2.2rem;
 
     padding: 0.5rem 0.95rem;
 
-    font-size: 0.67rem;
+    font-size: 0.66rem;
     letter-spacing: 0.13em;
   }
 
@@ -827,7 +943,8 @@
 
   .activeCard.featured .cardInner {
     animation:
-      featuredFloatMobile 4.8s ease-in-out infinite;
+      featuredFloatMobile 4.8s ease-in-out
+      infinite;
   }
 
   .card:not(.featured) .cardInner {
@@ -916,6 +1033,10 @@
   }
 }
 
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
 @media (max-width: 40rem) {
   .root {
     padding-block: 3.5rem;
@@ -935,6 +1056,7 @@
 
   .mobileSelectors {
     gap: 0.5rem;
+
     margin-top: 1.6rem;
   }
 
@@ -987,7 +1109,7 @@
     transform: scale(1);
   }
 
-  .badge {
+  .featuredBadge {
     top: 1rem;
 
     min-height: 2rem;
@@ -1037,6 +1159,27 @@
     font-size: 0.7rem;
   }
 
+  .offerDeadline {
+    min-height: 2.6rem;
+    gap: 0.5rem;
+  }
+
+  .offerDeadlineTitle {
+    font-size: 0.6rem;
+  }
+
+  .offerDeadlineDescription {
+    max-width: 8rem;
+
+    font-size: 0.61rem;
+  }
+
+  .offerDeadlineTime {
+    min-width: 3.8rem;
+
+    font-size: 1.05rem;
+  }
+
   .benefits {
     gap: 0.55rem;
   }
@@ -1082,6 +1225,10 @@
     font-size: 0.82rem;
   }
 }
+
+/* =========================================================
+   ACESSIBILIDADE
+   ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
   .mobileSelector,
