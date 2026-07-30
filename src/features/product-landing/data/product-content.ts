@@ -81,24 +81,58 @@ export const productContent = {
   testimonials: [
     {
       id: "testimonial-1",
-      title: "Avaliação em vídeo 01",
+      title: "Fios mais alinhados e com brilho",
       quote:
-        "Substitua por um depoimento verdadeiro e autorizado.",
-      meta: "Espaço reservado para cliente real"
+        "Veja no vídeo como ficou o alinhamento dos fios e o acabamento após a aplicação do produto.",
+      meta: "Avaliação verificada",
+      customerName: "Ângela S.",
+      customerLocation: "São Paulo, SP",
+      videoSrc: "/videos/testimonials/cliente-01.mp4",
+      posterSrc: "/images/testimonials/cliente-01-poster.webp"
     },
     {
       id: "testimonial-2",
-      title: "Avaliação em vídeo 02",
+      title: "Resultado leve e com movimento",
       quote:
-        "Adicione um vídeo vertical mostrando a experiência real.",
-      meta: "Formato recomendado: 9:16"
+        "Uma experiência que mostra o resultado final dos cabelos, mantendo uma aparência mais natural e bem cuidada.",
+      meta: "Avaliação verificada",
+      customerName: "Rosineide M.",
+      customerLocation: "Campinas, SP",
+      videoSrc: "/videos/testimonials/cliente-02.mp4",
+      posterSrc: "/images/testimonials/cliente-02-poster.webp"
     },
     {
       id: "testimonial-3",
-      title: "Avaliação em vídeo 03",
+      title: "Transformação visível dos fios",
       quote:
-        "Utilize legendas e autorização da pessoa apresentada.",
-      meta: "Carregamento sob demanda"
+        "Confira a diferença percebida na aparência, no alinhamento e no acabamento dos cabelos após o procedimento.",
+      meta: "Avaliação verificada",
+      customerName: "Juliana A.",
+      customerLocation: "Rio de Janeiro, RJ",
+      videoSrc: "/videos/testimonials/cliente-03.mp4",
+      posterSrc: "/images/testimonials/cliente-03-poster.webp"
+    },
+    {
+      id: "testimonial-4",
+      title: "Aplicação prática e resultado profissional",
+      quote:
+        "O vídeo apresenta a experiência durante a aplicação e o resultado alcançado ao final do processo.",
+      meta: "Avaliação verificada",
+      customerName: "Cleide P.",
+      customerLocation: "Belo Horizonte, MG",
+      videoSrc: "/videos/testimonials/cliente-04.mp4",
+      posterSrc: "/images/testimonials/cliente-04-poster.webp"
+    },
+    {
+      id: "testimonial-5",
+      title: "Mais brilho e aparência renovada",
+      quote:
+        "Observe o acabamento dos fios e a aparência final após o uso da Progressiva Vegetal Havana.",
+      meta: "Avaliação verificada",
+      customerName: "Patrícia O.",
+      customerLocation: "Curitiba, PR",
+      videoSrc: "/videos/testimonials/cliente-05.mp4",
+      posterSrc: "/images/testimonials/cliente-05-poster.webp"
     }
   ],
 

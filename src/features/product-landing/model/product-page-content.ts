@@ -15,6 +15,28 @@ export type Testimonial = Readonly<{
   title: string;
   quote: string;
   meta: string;
+
+  /**
+   * Caminho público do vídeo.
+   * Exemplo: /videos/testimonials/cliente-01.mp4
+   */
+  videoSrc?: string;
+
+  /**
+   * Imagem exibida antes de o vídeo iniciar.
+   * Exemplo: /images/testimonials/cliente-01-poster.webp
+   */
+  posterSrc?: string;
+
+  /**
+   * Nome da pessoa, quando houver autorização.
+   */
+  customerName?: string;
+
+  /**
+   * Informação complementar, como cidade e estado.
+   */
+  customerLocation?: string;
 }>;
 
 export type Offer = Readonly<{

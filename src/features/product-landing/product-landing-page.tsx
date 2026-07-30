@@ -1,5 +1,4 @@
 import { productContent } from "./data/product-content";
-import { BenefitsSection } from "./sections/benefits/benefits-section";
 import { CodProcessSection } from "./sections/cod-process/cod-process-section";
 import { FaqSection } from "./sections/faq/faq-section";
 import { FinalCtaSection } from "./sections/final-cta/final-cta-section";
@@ -23,12 +22,17 @@ export function ProductLandingPage() {
 
       <main>
         <HeroSection content={productContent} />
-        <BenefitsSection items={productContent.benefits} />
-        <ProductShowcaseSection content={productContent} />
+
         <TestimonialsSection items={productContent.testimonials} />
+
+        <ProductShowcaseSection content={productContent} />
+
         <OffersSection offers={productContent.offers} />
+
         <CodProcessSection />
+
         <FaqSection items={productContent.faq} />
+
         <FinalCtaSection />
       </main>
 

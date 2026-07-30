@@ -92,3 +92,72 @@ Edite `src/features/product-landing/data/product-content.ts` para alterar textos
 - Correção da exibição simultânea dos itens da barra de confiança no mobile.
 - Correção da altura excessiva do Hero.
 - Correção da inconsistência visual entre os CTAs.
+
+
+# Milestone 002 — Prova Social com Avaliações em Vídeo
+
+## Funcionalidades
+
+- Nova seção de resultados posicionada logo após o Hero.
+- Remoção completa da antiga seção de benefícios.
+- Carrossel horizontal com cinco avaliações em vídeo.
+- Navegação por botões anterior e próximo.
+- Indicadores visuais de posição do carrossel.
+- Suporte a swipe e scroll horizontal no mobile.
+- Vídeos verticais preparados no formato 9:16.
+- Exibição de nome, cidade, avaliação e relato de cada cliente.
+- Selo visual de “Avaliação verificada”.
+- Ícone SVG personalizado no selo de verificação.
+- Pausa automática dos outros vídeos ao iniciar uma nova reprodução.
+- Fallback visual para vídeos ainda não cadastrados.
+- Link “Ver resultados” direcionado diretamente à prova social.
+- Navegação do header atualizada com acesso à seção de resultados.
+
+## Melhorias Técnicas
+
+- Extensão do contrato `Testimonial` com suporte a vídeo, poster, cliente e localização.
+- Conteúdo das avaliações centralizado em `product-content.ts`.
+- Carrossel desenvolvido sem bibliotecas externas.
+- Controle de vídeos através de referências tipadas.
+- Uso de `requestAnimationFrame` para atualizar o índice do carrossel durante o scroll.
+- Tratamento seguro para elementos inexistentes.
+- Navegação acessível com botões e labels descritivos.
+- Estrutura preparada para adicionar ou remover avaliações sem alterar o componente.
+- Separação entre conteúdo comercial, comportamento e apresentação visual.
+
+## Performance
+
+- Vídeos configurados com `preload="metadata"`.
+- Reprodução automática desabilitada.
+- Apenas um vídeo reproduzido por vez.
+- Posters em formato WebP.
+- Scroll horizontal nativo com `scroll-snap`.
+- Ausência de dependências adicionais para o carrossel.
+- Animações restritas a `opacity`, `transform` e propriedades leves.
+- Suporte a `prefers-reduced-motion`.
+- Atualização do índice limitada por `requestAnimationFrame`.
+- Estrutura preparada para vídeos MP4 H.264 otimizados.
+
+## Refatorações
+
+- Substituição da seção de benefícios pela seção de resultados.
+- Reorganização da ordem das seções da landing page.
+- Atualização da navegação principal do header.
+- Aplicação da fonte Georgia no título principal da prova social.
+- Padronização visual dos títulos dos cards de avaliação.
+- Substituição de textos provisórios por títulos e descrições comerciais.
+- Ampliação do carrossel para cinco clientes.
+- Organização dos vídeos em `public/videos/testimonials`.
+- Organização dos posters em `public/images/testimonials`.
+- Organização do ícone verificado em `public/icons/verified`.
+
+## Correções
+
+- Correção do caminho do ícone `verifed.svg`.
+- Correção da renderização do ícone de avaliação verificada.
+- Correção do estado ativo dos indicadores do carrossel.
+- Correção da pausa entre diferentes vídeos.
+- Correção da tipagem das referências dos vídeos.
+- Correção do cálculo do card central durante o scroll.
+- Correção da responsividade dos cards no mobile.
+- Correção de textos provisórios e instruções internas exibidas ao usuário.
