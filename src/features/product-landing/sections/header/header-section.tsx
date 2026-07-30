@@ -77,7 +77,7 @@ export function HeaderSection({
           className={styles.navigation}
           aria-label="Navegação principal"
         >
-          <a href="#beneficios">Benefícios</a>
+          <a href="#produto">Produto</a>
           <a href="#avaliacoes">Avaliações</a>
           <a href="#ofertas">Ofertas</a>
           <a href="#duvidas">Dúvidas</a>
