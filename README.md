@@ -822,3 +822,26 @@ Edite `src/features/product-landing/data/product-content.ts` para alterar textos
 - Restauradas a aura pulsante e a animação flutuante do card principal.
 - Corrigido o posicionamento central do selo “Mais popular”.
 - Corrigido o espaço vazio deixado pela barra promocional após sua remoção.
+
+# Milestone 014 — Integração inicial do Meta Pixel
+
+## Funcionalidades
+- Adicionado o código-base do Meta Pixel ao layout global da aplicação.
+- Configurado o evento automático `PageView`.
+- Adicionado fallback via `<noscript>` para navegadores com JavaScript desativado.
+
+## Melhorias Técnicas
+- Integração realizada com `next/script`.
+- Carregamento configurado com `strategy="afterInteractive"`.
+- Pixel aplicado globalmente por meio do `RootLayout`.
+
+## Performance
+- Script carregado sem bloquear a renderização inicial da página.
+- Mantida a otimização de carregamento das fontes e do conteúdo principal.
+
+## Refatorações
+- Centralizado o ID do Meta Pixel em uma constante.
+- Desativada a regra `@next/next/no-img-element` apenas no pixel invisível de fallback.
+
+## Correções
+- Corrigido o aviso do ESLint relacionado ao uso obrigatório do `<img>` no fallback oficial do Meta Pixel.
