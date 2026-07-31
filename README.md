@@ -845,3 +845,35 @@ Edite `src/features/product-landing/data/product-content.ts` para alterar textos
 
 ## Correções
 - Corrigido o aviso do ESLint relacionado ao uso obrigatório do `<img>` no fallback oficial do Meta Pixel.
+
+
+# Milestone 015 — Rastreamento de interação nas ofertas
+
+## Funcionalidades
+- Adicionado rastreamento individual dos kits exibidos na seção de ofertas.
+- Registrada a seleção de quantidade realizada pelos seletores mobile.
+- Registrado o clique no botão `Comprar agora`.
+- Adicionado o evento padrão `InitiateCheckout`.
+- Adicionado o evento personalizado `SelectOffer`.
+
+## Melhorias Técnicas
+- Centralizado o envio de eventos do Meta Pixel no componente de ofertas.
+- Incluídos parâmetros para identificar oferta, quantidade e origem da interação.
+- Mantido o fluxo atual de redirecionamento para o checkout.
+- Rastreamento executado somente quando o Meta Pixel está disponível no navegador.
+
+## Performance
+- Eventos enviados apenas mediante interação real do usuário.
+- Nenhum listener global adicional foi criado.
+- Mantido o controle otimizado do carrossel com `requestAnimationFrame`.
+- Nenhuma alteração visual ou dependência adicional foi introduzida.
+
+## Refatorações
+- Criadas funções reutilizáveis para disparar eventos de analytics.
+- Separadas as interações de seleção da intenção de checkout.
+- Padronizados os parâmetros enviados ao Meta Pixel.
+
+## Correções
+- Garantida a identificação separada de cada quantidade de produto.
+- Evitado o bloqueio da navegação caso o Pixel não esteja carregado.
+- Preservados o carrossel, o cronômetro e os estilos existentes.

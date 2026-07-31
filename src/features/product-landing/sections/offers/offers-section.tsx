@@ -23,7 +23,49 @@ type OffersSectionProps = Readonly<{
   offers: readonly Offer[];
 }>;
 
+type MetaPixelParameters = Readonly<
+  Record<string, unknown>
+>;
+
+declare global {
+  interface Window {
+    fbq?: (
+      action: "track" | "trackCustom",
+      eventName: string,
+      parameters?: MetaPixelParameters,
+    ) => void;
+  }
+}
+
 const PROGRAMMATIC_SCROLL_TIMEOUT = 700;
+
+function trackMetaPixelEvent(
+  action: "track" | "trackCustom",
+  eventName: string,
+  parameters?: MetaPixelParameters,
+): void {
+  if (
+    typeof window === "undefined" ||
+    typeof window.fbq !== "function"
+  ) {
+    return;
+  }
+
+  window.fbq(action, eventName, parameters);
+}
+
+function parseCurrencyValue(
+  formattedPrice: string,
+): number | undefined {
+  const normalizedValue = formattedPrice
+    .replace(/[^\d,.-]/g, "")
+    .replace(/\./g, "")
+    .replace(",", ".");
+
+  const value = Number.parseFloat(normalizedValue);
+
+  return Number.isFinite(value) ? value : undefined;
+}
 
 function getQuantityLabel(quantity: number): string {
   return quantity === 1
@@ -139,6 +181,58 @@ export function OffersSection({
           : closestIndex;
       });
     }, []);
+
+  const trackOfferSelection = useCallback(
+    (
+      offer: Offer,
+      interactionSource:
+        | "mobile_selector"
+        | "offer_cta",
+    ) => {
+      trackMetaPixelEvent(
+        "trackCustom",
+        "SelectOffer",
+        {
+          offer_id: offer.id,
+          offer_name: offer.name,
+          checkout_key: offer.checkoutKey,
+          quantity: offer.quantity,
+          displayed_price: offer.price,
+          featured: offer.featured === true,
+          interaction_source: interactionSource,
+        },
+      );
+    },
+    [],
+  );
+
+  const trackCheckoutStart = useCallback(
+    (offer: Offer) => {
+      trackOfferSelection(offer, "offer_cta");
+
+      const value = parseCurrencyValue(
+        offer.price,
+      );
+
+      trackMetaPixelEvent(
+        "track",
+        "InitiateCheckout",
+        {
+          content_ids: [offer.checkoutKey],
+          content_name: offer.name,
+          content_type: "product",
+          num_items: offer.quantity,
+          ...(value === undefined
+            ? {}
+            : {
+                value,
+                currency: "BRL",
+              }),
+        },
+      );
+    },
+    [trackOfferSelection],
+  );
 
   const scrollToOffer = useCallback(
     (
@@ -346,9 +440,14 @@ export function OffersSection({
                     ? styles.mobileSelectorActive
                     : ""
                 }`}
-                onClick={() =>
-                  scrollToOffer(index)
-                }
+                onClick={() => {
+                  trackOfferSelection(
+                    offer,
+                    "mobile_selector",
+                  );
+
+                  scrollToOffer(index);
+                }}
                 aria-label={`Selecionar kit com ${getQuantityLabel(
                   offer.quantity,
                 )}`}
@@ -573,6 +672,9 @@ export function OffersSection({
                         : styles.ctaDefault
                     }`}
                     prefetch={false}
+                    onClick={() =>
+                      trackCheckoutStart(offer)
+                    }
                   >
                     Comprar agora
                   </Link>
